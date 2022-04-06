@@ -1,42 +1,5 @@
-</style>
-</head>
-
 <body>
-    <p style="text-indent: 0pt;text-align: left;"><br /></p>
-    <p class="s1" style="padding-top: 1pt;padding-left: 5pt;text-indent: 0pt;line-height: 170%;text-align: left;">Spring
-        2022 CPSC 332-02 – File Structures and Databases Project Description</p>
-    <p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 19pt;text-align: left;">Instructor: Hokseng Hun
-    </p>
-    <p style="text-indent: 0pt;text-align: left;"><br /></p>
-    <p class="s2" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">[Version 2022.03.16]</p>
-    <p style="text-indent: 0pt;text-align: left;"><br /></p>
-    <h1 style="padding-top: 2pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">Important Date:</h1>
-    <ol id="l1">
-        <li data-list-text="1.">
-            <p style="padding-top: 9pt;padding-left: 41pt;text-indent: -18pt;text-align: left;">Project Part A – Due on
-                Monday, March 28, 2022, 5:00pm</p>
-        </li>
-        <li data-list-text="2.">
-            <p style="padding-top: 1pt;padding-left: 41pt;text-indent: -18pt;text-align: left;">Project Part B – Due on
-                Monday, May 16, 2022, 5:00pm</p>
-        </li>
-    </ol>
-    <p style="text-indent: 0pt;text-align: left;"><br /></p>
-    <p style="padding-left: 5pt;text-indent: 0pt;line-height: 108%;text-align: left;">Project submission should be made
-        via Canvas. Each student should work on the project in groups of 4- 6, and submit a final report, a demo and
-        presentation for the project. Each student of the group will be asked to submit a review of their group members,
-        where each member will assign the percentage of contribution towards the project for their group members.
-        Logically, an equal contribution from each member is expected. Any student who receives a review lower than 25 %
-        from their group members may receive a lower grade than other members.</p>
-    <p style="text-indent: 0pt;text-align: left;"><br /></p>
-    <h1 style="padding-left: 5pt;text-indent: 0pt;line-height: 108%;text-align: left;">Note<span class="p">: Project
-            submissions made through email will not be accepted. Only submissions made on Canvas shall receive
-            grades.</span></h1>
-    <p style="padding-top: 7pt;padding-left: 5pt;text-indent: 0pt;text-align: left;">Maximum Marks: 60 points</p>
-    <p style="text-indent: 0pt;text-align: left;"><br /></p>
-    <p style="padding-left: 5pt;text-indent: 0pt;line-height: 108%;text-align: left;">The project comprises 2 main
-        parts, including extra credit options – for additional functionality or extra credit part.</p>
-    <p style="text-indent: 0pt;text-align: left;"><br /></p>
+    
     <h1 style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Database Application Project:</h1>
     <p style="padding-top: 9pt;padding-left: 5pt;text-indent: 0pt;line-height: 108%;text-align: left;">You are a
         freelance software development team that will be receiving a project request from a client about Job Posting
