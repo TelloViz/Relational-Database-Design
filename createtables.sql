@@ -165,3 +165,30 @@ CREATE TABLE IF NOT EXISTS ExpReq (
     PRIMARY KEY (ExpReqID);
 );
 
+CREATE TABLE IF NOT EXISTS ZipCodes (
+    ZipCodeID TYPE_zipcodeid NOT NULL;
+    TimeStamp TYPE_timestamp NOT NULL;
+    StateID TYPE_stateid NOT NULL;
+    City TYPE_city NOT NULL;
+    
+    FOREIGN KEY (StateID) REFERENCES States (StateID)
+    PRIMARY KEY (ZipCodeID); 
+);
+
+CREATE TABLE IF NOT EXISTS States (
+    StateID TYPE_stateid NOT NULL;
+    StateName TYPE_shortname NOT NULL;
+    
+
+    PRIMARY KEY (StateID); 
+);
+
+CREATE TABLE IF NOT EXISTS Address (
+    AddressID TYPE_addressid NOT NULL;
+    ZipCodeID TYPE_zipcodeid NOT NULL;
+    TimeStamp TYPE_timestamp;
+    StreetAddress TYPE_address NOT NULL;
+
+    FOREIGN KEY (ZipCodeID) REFERENCES ZipCodes (ZipCodeID);
+    PRIMARY KEY (AddressID);
+);
