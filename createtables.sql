@@ -1,194 +1,187 @@
-CREATE DOMAIN TYPE_timestamp AS DATETIME NOT NULL DEFAULT GETTIME();
-CREATE DOMAIN TYPE_shortname AS VARCHAR(30);
-CREATE DOMAIN TYPE_email AS VARCHAR(255);
-CREATE DOMAIN TYPE_phone AS VARCHAR(15);
-CREATE DOMAIN TYPE_address AS VARCHAR(255);
-CREATE DOMAIN TYPE_title AS VARCHAR(255);
-CREATE DOMAIN TYPE_description AS VARCHAR(255);
+CREATE SCHEMA schemers;
+USE schemers;
 
-CREATE DOMAIN TYPE_userid AS INT(10);
-CREATE DOMAIN TYPE_employeeid AS INT(10);
-CREATE DOMAIN TYPE_employerid AS INT(10);
-CREATE DOMAIN TYPE_educationid AS INT(5);
-CREATE DOMAIN TYPE_benefitid AS INT(5);
-CREATE DOMAIN TYPE_roleid AS INT(5);
-CREATE DOMAIN TYPE_jobpostid AS INT(15);
-CREATE DOMAIN TYPE_addressid AS INT(15);
-CREATE DOMAIN TYPE_appstatusid AS INT(2);
-CREATE DOMAIN TYPE_expreqid AS INT(2);
-CREATE DOMAIN TYPE_salaryid AS INT(2);
-
-CREATE TABLE IF NOT EXISTS UserAccount (
-    UserID TYPE_userid NOT NULL;
-    Email TYPE_Email NOT NULL,
-    EmployeeID TYPE_employeeid;
-    FirstName TYPE_shortname NOT NULL,
-    LastName TYPE_shortname NOT NULL,
-    Phone TYPE_phone,
-    Password VARCHAR(255) NOT NULL,
-    TimeStamp TYPE_timestamp;
-
-    PRIMARY KEY (UserID),
-    PRIMARY KEY (AcctEmail),
-    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID);
+-- Address Stuff
+CREATE TABLE IF NOT EXISTS States (
+    StateID VARCHAR(2) NOT NULL,
+    StateName VARCHAR(30) NOT NULL,
+    
+    PRIMARY KEY (StateID)
 );
 
-CREATE TABLE IF NOT EXISTS Employee (
-    EmployeeID TYPE_employeeid NOT NULL;
-    EducationLevel TYPE_edulevel NOT NULL;
-    TimeStamp TYPE_timestamp;
-    FOREIGN KEY (EducationID) REFERENCES Education(EducationID)
+CREATE TABLE IF NOT EXISTS ZipCodes (
+    ZipCodeID INT(5) UNSIGNED NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW() NOT NULL,
+    StateID VARCHAR(2) NOT NULL,
+    City VARCHAR(255) NOT NULL,
+    
+    FOREIGN KEY (StateID) REFERENCES States (StateID),
+    PRIMARY KEY (ZipCodeID)
+);
+
+CREATE TABLE IF NOT EXISTS Addresses (
+    AddressID VARCHAR(255) NOT NULL,
+    ZipCodeID INT(5) UNSIGNED NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    StreetAddress VARCHAR(255) NOT NULL,
+
+    FOREIGN KEY (ZipCodeID) REFERENCES ZipCodes (ZipCodeID),
+    PRIMARY KEY (AddressID)
+);
+
+
+-- Base data tables with no foreign keys
+CREATE TABLE IF NOT EXISTS AppStatus (
+    AppStatusID INT(2) NOT NULL UNIQUE,
+    Title VARCHAR(255) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (AppStatusID)
 );
 
 CREATE TABLE IF NOT EXISTS Education(
-    EducationID TYPE_educationid NOT NULL;
-    Title TYPE_title NOT NULL;
-    TimeStamp TYPE_timestamp;
-    PRIMARY KEY (EducationID);
+    EducationID INT(5) NOT NULL UNIQUE,
+    Title VARCHAR(255) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (EducationID)
+);
+
+CREATE TABLE IF NOT EXISTS Roles (
+    RoleID INT(5) NOT NULL UNIQUE,
+    Title VARCHAR(255) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (RoleID)
+);
+
+
+CREATE TABLE IF NOT EXISTS Benefits (
+    BenefitID INT(5) NOT NULL,
+    Title VARCHAR(255) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (BenefitID)
+);
+
+CREATE TABLE IF NOT EXISTS ExpReq (
+    ExpReqID INT(2) NOT NULL,
+    Title VARCHAR(255) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (ExpReqID)
+);
+
+CREATE TABLE IF NOT EXISTS JobTypes (
+    JobTypeID INT(10) UNSIGNED NOT NULL,
+    Title VARCHAR(255) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (JobTypeID)
+);
+
+
+-- foreign key tables
+
+CREATE TABLE IF NOT EXISTS Employee (
+    EmployeeID INT(10) NOT NULL UNIQUE,
+    EducationID INT(5) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (EmployeeID),
+    FOREIGN KEY (EducationID) REFERENCES Education(EducationID)
+);
+
+
+CREATE TABLE IF NOT EXISTS UserAccount (
+    UserID INT(10) NOT NULL,
+    Email VARCHAR(255) NOT NULL UNIQUE,
+    EmployeeID INT(10) UNIQUE,
+    FirstName VARCHAR(30) NOT NULL,
+    LastName VARCHAR(30) NOT NULL,
+    Phone  VARCHAR(15),
+    Password VARCHAR(255) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+
+    PRIMARY KEY (UserID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID)
+);
+
+CREATE TABLE IF NOT EXISTS Employers (
+    EmployerID INT(10) NOT NULL,
+    AddressID VARCHAR(255) NOT NULL,
+    EmployerName VARCHAR(30) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    Phone  VARCHAR(15),
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+
+    PRIMARY KEY (EmployerID),
+    FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID)
+);
+
+CREATE TABLE IF NOT EXISTS EmployerAdmin (
+    UserID INT(10) NOT NULL,
+    EmployerID INT(10) NOT NULL,
+    RoleID INT(5) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (UserID, EmployerID),
+    FOREIGN KEY (UserID) REFERENCES UserAccount(UserID),
+    FOREIGN KEY (EmployerID) REFERENCES Employers(EmployerID)
+);
+
+CREATE TABLE IF NOT EXISTS JobPosts (
+    JobPostID INT(5) NOT NULL,
+    EmployerID INT(10) NOT NULL,
+    EducationID INT(5) NOT NULL,
+    JobTypeID INT(10) UNSIGNED NOT NULL,
+    ExpReqID  INT(2) NOT NULL,
+    AddressID VARCHAR(255) NOT NULL,
+    SalaryMin INT(10) UNSIGNED NOT NULL,
+    SalaryMax INT(10) UNSIGNED,
+    CONSTRAINT SMaxAboveSMin CHECK( SalaryMax >= SalaryMin ),
+
+    Title VARCHAR(255) NOT NULL,
+    JobDesc TEXT,
+    JobResp TEXT,
+    JobQual TEXT,
+    ContactEmail VARCHAR(255) NOT NULL,
+    ContactPhone  VARCHAR(15),
+    ContactMessage TEXT,
+
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    DatePosted DATETIME,
+    DeadLine DATETIME,
+
+    PRIMARY KEY (JobPostID),
+    FOREIGN KEY (EmployerID) REFERENCES Employer(EmployerID),
+    FOREIGN KEY (EducationID) REFERENCES Education(EducationID),
+    FOREIGN KEY (JobTypeID) REFERENCES JobTypes(JobTypeID),
+    FOREIGN KEY (ExpReqID) REFERENCES ExpReq(ExpReqID),
+    FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID)
+);
+
+
+-- require job foreign key
+CREATE TABLE IF NOT EXISTS JobBenefits (
+    BenefitID INT(5) NOT NULL,
+    JobPostID INT(5) NOT NULL,
+    Title VARCHAR(255) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+
+    PRIMARY KEY (BenefitID, JobPostID),
+    FOREIGN KEY (JobPostID) REFERENCES JobPosts(JobPostID),
+    FOREIGN KEY (BenefitID) REFERENCES Benefits(BenefitID)
 );
 
 CREATE TABLE IF NOT EXISTS SavedPosts (
-    EmployeeID TYPE_employeeid NOT NULL;
-    JobPostID TYPE_jobpostid NOT NULL;
-    TimeStamp TYPE_timestamp;
-    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID);
-    FOREIGN KEY (JobPostID) REFERENCES JobPost(JobPostID);
+    EmployeeID INT(10) NOT NULL,
+    JobPostID INT(5) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID),
+    FOREIGN KEY (JobPostID) REFERENCES JobPosts(JobPostID),
     PRIMARY KEY (EmployeeID, JobPostID)
 );
 
 CREATE TABLE IF NOT EXISTS AppliedPosts (
-    EmployeeID TYPE_employeeid NOT NULL;
-    JobPostID TYPE_jobpostid NOT NULL;
-    AppStatusID TYPE_appstatusid NOT NULL;
-    TimeStamp TYPE_timestamp;
-    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID);
-    FOREIGN KEY (JobPostID) REFERENCES JobPost(JobPostID);
-    FOREIGN KEY (AppStatusID) REFERENCES AppStatus(AppStatusID);
+    EmployeeID INT(10) NOT NULL,
+    JobPostID INT(5) NOT NULL,
+    AppStatusID INT(2) NOT NULL,
+    TimeStamp DATETIME NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID),
+    FOREIGN KEY (JobPostID) REFERENCES JobPosts(JobPostID),
+    FOREIGN KEY (AppStatusID) REFERENCES AppStatus(AppStatusID),
     PRIMARY KEY (EmployeeID, JobPostID)
-);
-
-CREATE TABLE IF NOT EXISTS AppStatus (
-    AppStatusID TYPE_appstatusid NOT NULL;
-    Title TYPE_title NOT NULL;
-    TimeStamp TYPE_timestamp;
-    PRIMARY KEY (AppStatusID)
-);
-
-CREATE TABLE IF NOT EXISTS EmployerAdmin (
-    UserID TYPE_userid NOT NULL;
-    EmployerID TYPE_employerid NOT NULL;
-    RoleID TYPE_roleid NOT NULL;
-    TimeStamp TYPE_timestamp;
-    PRIMARY KEY (UserID, EmployerID)
-);
-
-CREATE TABLE IF NOT EXISTS Roles (
-    RoleID TYPE_roleid NOT NULL;
-    Title TYPE_title NOT NULL;
-    TimeStamp TYPE_timestamp;
-    PRIMARY KEY (RoleID);
-);
-
-CREATE TABLE IF NOT EXISTS Employer (
-    EmployerID TYPE_employerid NOT NULL;
-    AddressID TYPE_addressid NOT NULL;
-    EmployerName TYPE_shortname NOT NULL;
-    Email TYPE_email NOT NULL;
-    Phone TYPE_phone;
-    TimeStamp TYPE_timestamp;
-
-    PRIMARY KEY (EmployerID);
-    FOREIGN KEY (AddressID) REFERENCES Address(AddressID);
-);
-
-CREATE TABLE IF NOT EXISTS JobPosts (
-    JobPostID TYPE_jobpostid NOT NULL;
-    EmployerID TYPE_employerid NOT NULL;
-    EducationID TYPE_educationid NOT NULL;
-    JobTypeID TYPE_jobtypeid NOT NULL;
-    ExpReqID TYPE_expreqid NOT NULL;
-    SalaryID TYPE_salaryid NOT NULL;
-    AddressID TYPE_addressid NOT NULL;
-
-    Title TYPE_title NOT NULL;
-    JobDesc TYPE_longtext;
-    JobResp TYPE_longtext;
-    JobQual TYPE_longtext;
-    ContactEmail TYPE_email NOT NULL;
-    ContactPhone TYPE_phone;
-    ContactMessage TYPE_longtext;
-
-    TimeStamp TYPE_timestamp;
-    DatePosted DATETIME
-    DeadLine DATETIME;
-
-    PRIMARY KEY (JobPostID);
-    FOREIGN KEY (EmployerID) REFERENCES Empolyer(EmployerID);
-    FOREIGN KEY (EducationID) REFERENCES Education(EducationID);
-    FOREIGN KEY (JobTypeID) REFERENCES JobTypes(JobTypeID);
-    FOREIGN KEY (ExpReqID) REFERENCES ExpReq(ExpReqID);
-    FOREIGN KEY (SalaryID) REFERENCES SalaryID(SalaryID);
-    FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID);
-);
-
-
-CREATE TABLE IF NOT EXISTS JobBenefits (
-    BenefitID TYPE_benefitid NOT NULL;
-    JobPostID TYPE_jobpostid NOT NULL;
-    Title TYPE_title NOT NULL;
-    TimeStamp TYPE_timestamp;
-
-    PRIMARY KEY (BenefitID, JobPostID);
-    FOREIGN KEY (JobPostID) REFERENCES JobPosts(JobPostID);
-    FOREIGN KEY (BenefitIDe REFERENCES Benefits(BenefitID);
-);
-
-CREATE TABLE IF NOT EXISTS Benefits (
-    BenefitID TYPE_benefitid NOT NULL;
-    Title TYPE_title NOT NULL;
-    TimeStamp TYPE_timestamp;
-
-    PRIMARY KEY (BenefitID);
-);
-
-CREATE TABLE IF NOT EXISTS JobTypes (
-    JobTypeID TYPE_jobtypeid NOT NULL;
-    Title TYPE_title NOT NULL;
-    TimeStamp TYPE_timestamp;
-    PRIMARY KEY (JobTypeID);
-);
-
-CREATE TABLE IF NOT EXISTS ExpReq (
-    ExpReqID TYPE_expreqid NOT NULL;
-    Title TYPE_title NOT NULL;
-    TimeStamp TYPE_timestamp;
-    PRIMARY KEY (ExpReqID);
-);
-
-CREATE TABLE IF NOT EXISTS ZipCodes (
-    ZipCodeID TYPE_zipcodeid NOT NULL;
-    TimeStamp TYPE_timestamp NOT NULL;
-    StateID TYPE_stateid NOT NULL;
-    City TYPE_city NOT NULL;
-    
-    FOREIGN KEY (StateID) REFERENCES States (StateID)
-    PRIMARY KEY (ZipCodeID); 
-);
-
-CREATE TABLE IF NOT EXISTS States (
-    StateID TYPE_stateid NOT NULL;
-    StateName TYPE_shortname NOT NULL;
-    
-
-    PRIMARY KEY (StateID); 
-);
-
-CREATE TABLE IF NOT EXISTS Address (
-    AddressID TYPE_addressid NOT NULL;
-    ZipCodeID TYPE_zipcodeid NOT NULL;
-    TimeStamp TYPE_timestamp;
-    StreetAddress TYPE_address NOT NULL;
-
-    FOREIGN KEY (ZipCodeID) REFERENCES ZipCodes (ZipCodeID);
-    PRIMARY KEY (AddressID);
 );
