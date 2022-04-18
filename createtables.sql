@@ -3,6 +3,7 @@ CREATE DOMAIN TYPE_shortname AS VARCHAR(30);
 CREATE DOMAIN TYPE_email AS VARCHAR(255);
 CREATE DOMAIN TYPE_phone AS VARCHAR(15);
 CREATE DOMAIN TYPE_address AS VARCHAR(255);
+CREATE DOMAIN TYPE_city AS VARCHAR(30);
 CREATE DOMAIN TYPE_title AS VARCHAR(255);
 
 CREATE DOMAIN TYPE_userid AS INT(10);
@@ -16,6 +17,9 @@ CREATE DOMAIN TYPE_addressid AS INT(15);
 CREATE DOMAIN TYPE_appstatusid AS INT(2);
 CREATE DOMAIN TYPE_expreqid AS INT(2);
 CREATE DOMAIN TYPE_salaryid AS INT(2);
+CREATE DOMAIN TYPE_zipcodeid AS INT(5);
+CREATE DOMAIN TYPE_stateid AS VARCHAR(2);
+
 
 CREATE TABLE IF NOT EXISTS UserAccount (
     UserID TYPE_userid NOT NULL;
@@ -113,3 +117,31 @@ CREATE TABLE IF NOT EXISTS JobPosts (
 
     FOREIGN KEY (JobPostID) REFERENCES JobPost
     PRIMARY KEY (JobPostID);
+
+CREATE TABLE IF NOT EXISTS ZipCodes (
+    ZipCodeID TYPE_zipcodeid NOT NULL;
+    TimeStamp TYPE_timestamp NOT NULL;
+    StateID TYPE_stateid NOT NULL;
+    City TYPE_city NOT NULL;
+    
+    FOREIGN KEY (StateID) REFERENCES States (StateID)
+    PRIMARY KEY (ZipCodeID); 
+);
+
+CREATE TABLE IF NOT EXISTS States (
+    StateID TYPE_stateid NOT NULL;
+    StateName TYPE_shortname NOT NULL;
+    
+
+    PRIMARY KEY (StateID); 
+);
+
+CREATE TABLE IF NOT EXISTS Address (
+    AddressID TYPE_addressid NOT NULL;
+    ZipCodeID TYPE_zipcodeid NOT NULL;
+    TimeStamp TYPE_timestamp;
+    StreetAddress TYPE_address NOT NULL;
+
+    FOREIGN KEY (ZipCodeID) REFERENCES ZipCodes (ZipCodeID);
+    PRIMARY KEY (AddressID);
+);
