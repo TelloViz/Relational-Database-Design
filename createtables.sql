@@ -4,6 +4,7 @@ CREATE DOMAIN TYPE_email AS VARCHAR(255);
 CREATE DOMAIN TYPE_phone AS VARCHAR(15);
 CREATE DOMAIN TYPE_address AS VARCHAR(255);
 CREATE DOMAIN TYPE_title AS VARCHAR(255);
+CREATE DOMAIN TYPE_description AS VARCHAR(255);
 
 CREATE DOMAIN TYPE_userid AS INT(10);
 CREATE DOMAIN TYPE_employeeid AS INT(10);
@@ -109,7 +110,58 @@ CREATE TABLE IF NOT EXISTS JobPosts (
     SalaryID TYPE_salaryid NOT NULL;
     AddressID TYPE_addressid NOT NULL;
 
+    Title TYPE_title NOT NULL;
+    JobDesc TYPE_longtext;
+    JobResp TYPE_longtext;
+    JobQual TYPE_longtext;
+    ContactEmail TYPE_email NOT NULL;
+    ContactPhone TYPE_phone;
+    ContactMessage TYPE_longtext;
+
+    TimeStamp TYPE_timestamp;
+    DatePosted DATETIME
+    DeadLine DATETIME;
+
+    PRIMARY KEY (JobPostID);
+    FOREIGN KEY (EmployerID) REFERENCES Empolyer(EmployerID);
+    FOREIGN KEY (EducationID) REFERENCES Education(EducationID);
+    FOREIGN KEY (JobTypeID) REFERENCES JobTypes(JobTypeID);
+    FOREIGN KEY (ExpReqID) REFERENCES ExpReq(ExpReqID);
+    FOREIGN KEY (SalaryID) REFERENCES SalaryID(SalaryID);
+    FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID);
+);
+
+
+CREATE TABLE IF NOT EXISTS JobBenefits (
+    BenefitID TYPE_benefitid NOT NULL;
+    JobPostID TYPE_jobpostid NOT NULL;
+    Title TYPE_title NOT NULL;
     TimeStamp TYPE_timestamp;
 
-    FOREIGN KEY (JobPostID) REFERENCES JobPost
-    PRIMARY KEY (JobPostID);
+    PRIMARY KEY (BenefitID, JobPostID);
+    FOREIGN KEY (JobPostID) REFERENCES JobPosts(JobPostID);
+    FOREIGN KEY (BenefitIDe REFERENCES Benefits(BenefitID);
+);
+
+CREATE TABLE IF NOT EXISTS Benefits (
+    BenefitID TYPE_benefitid NOT NULL;
+    Title TYPE_title NOT NULL;
+    TimeStamp TYPE_timestamp;
+
+    PRIMARY KEY (BenefitID);
+);
+
+CREATE TABLE IF NOT EXISTS JobTypes (
+    JobTypeID TYPE_jobtypeid NOT NULL;
+    Title TYPE_title NOT NULL;
+    TimeStamp TYPE_timestamp;
+    PRIMARY KEY (JobTypeID);
+);
+
+CREATE TABLE IF NOT EXISTS ExpReq (
+    ExpReqID TYPE_expreqid NOT NULL;
+    Title TYPE_title NOT NULL;
+    TimeStamp TYPE_timestamp;
+    PRIMARY KEY (ExpReqID);
+);
+
