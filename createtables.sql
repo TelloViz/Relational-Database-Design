@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS JobPosts (
     DeadLine DATETIME,
 
     PRIMARY KEY (JobPostID),
-    FOREIGN KEY (EmployerID) REFERENCES Employer(EmployerID),
+    FOREIGN KEY (EmployerID) REFERENCES Employers(EmployerID),
     FOREIGN KEY (EducationID) REFERENCES Education(EducationID),
     FOREIGN KEY (JobTypeID) REFERENCES JobTypes(JobTypeID),
     FOREIGN KEY (ExpReqID) REFERENCES ExpReq(ExpReqID),
