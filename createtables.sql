@@ -1,4 +1,4 @@
-CREATE SCHEMA schemers;
+CREATE SCHEMA IF NOT EXISTS schemers;
 USE schemers;
 
 -- Address Stuff
