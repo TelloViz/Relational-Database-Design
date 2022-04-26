@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS ADDRESSES (
     AddressID BIGINT,
     ZipCodeID INT,
-    Time_Stamp TimeStamp,
+    Time_Stamp DATETIME,
     StreetAddress VARCHAR(250));
 
 INSERT INTO ADDRESSES VALUES('1',54264,'2864-03-08 06:42:43Z','Callcott   Alley, 7898');
