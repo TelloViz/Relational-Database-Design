@@ -2,7 +2,7 @@
 
 
 /*script generated for free with OnlineDataGenerator available at: https://www.onlinedatagenerator.com */
-CREATE TABLE MOCK_ADDRESS(AddressID BIGINT,ZipCodeID INT,TimeStamp DATETIME,StreetAddress VARCHAR(500));
+CREATE TABLE MOCK_ADDRESS(AddressID VARCHAR(250),ZipCodeID INT,Time_Stamp TimeStamp,StreetAddress VARCHAR(250));
 
 INSERT INTO MOCK_ADDRESS VALUES('1',54264,'2864-03-08 06:42:43Z','Callcott   Alley, 7898');
 INSERT INTO MOCK_ADDRESS VALUES('2',53553,'4335-03-20 20:24:47Z','Marina  Way, 9220');
