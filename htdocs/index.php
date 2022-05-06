@@ -27,6 +27,5 @@ $inject = [
 
 require_once('base.php');
 printMain($inject);
-
 ?>
 
