@@ -24,8 +24,8 @@ $injectLogin = [
 "title" => "Login Page"
 ];
 
-require_once('login.php');
-printLogin($injectLogin);
+require_once('../base.php');
+printMain($injectLogin);
 
 
 ?>
