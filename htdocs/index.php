@@ -48,6 +48,9 @@ function printHomepage() {
   return $inject;
 }
 
+
+
+
 if (doesDBExist()) {
   $inject = printHomepage();
 }
