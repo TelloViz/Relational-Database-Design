@@ -1,5 +1,6 @@
 <?php 
 
+// replace with sql to fetch all posts
 $jsonposts = '{
     "Post1": {
         "title": "Post1",
@@ -10,8 +11,8 @@ $jsonposts = '{
         "description": "Some Other Description"
     }
 }';
-
 $posts = json_decode($jsonposts,true);
+
 
 require_once('searchbase.php');
 $bod = printPosts($posts);
