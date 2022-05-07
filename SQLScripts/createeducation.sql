@@ -9,7 +9,9 @@ CREATE TABLE IF NOT EXISTS Education(
 
 INSERT INTO Education(EducationID,Title,Time_Stamp) 
 VALUES 
-    (0, "Highschool", NOW()),
-    (1, "Associates", NOW()),
-    (2, "Bachelors", NOW()),
-    (3, "Graduate", NOW());
+    (0, "No Education Required", NOW()),
+    (1, "High School Degree", NOW()),
+    (2, "Associate's Degree", NOW()),
+    (3, "Bachelor's Degree", NOW()),
+    (4, "Master's Degree", NOW()),
+    (5, "Doctoral Degree", NOW());
