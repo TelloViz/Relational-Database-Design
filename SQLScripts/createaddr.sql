@@ -1,3 +1,5 @@
+USE schemers;
+
 CREATE TABLE IF NOT EXISTS Addresses (
     AddressID VARCHAR(255) NOT NULL,
     ZipCodeID INT(5) UNSIGNED NOT NULL,
