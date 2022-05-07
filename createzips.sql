@@ -1,8 +1,10 @@
+USE schemers;
+
 CREATE TABLE IF NOT EXISTS ZipCodes(
-        ZipCodeID INT(5) UNSIGNED NOT NOW(),
-        StateID VARCHAR(2) NOT NOW(),
-        City VARCHAR(255) NOT NOW(), 
-        Time_Stamp DATETIME NOT NOW() DEFAULT NOW(),
+        ZipCodeID INT(5) UNSIGNED NOT NULL,
+        StateID VARCHAR(2) NOT NULL,
+        City VARCHAR(255) NOT NULL, 
+        Time_Stamp DATETIME NOT NULL DEFAULT NOW(),
     FOREIGN KEY (StateID) REFERENCES States(StateID), 
     PRIMARY KEY (ZipCodeID)
 );
