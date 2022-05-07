@@ -98,7 +98,7 @@ INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (91324,'CA','Nort
 INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (92581,'CA','San Jacinto',NOW());
 INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (91766,'CA','Pomona',NOW());
 INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (93711,'CA','Fresno',NOW());
-INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (93637,'CA','Madera',NOW());
+/*INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (93637,'CA','Madera',NOW());
 INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (90638,'CA','La Mirada',NOW());
 INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (93631,'CA','Kingsburg',NOW());
 INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (93454,'CA','Santa Maria',NOW());
@@ -645,3 +645,4 @@ INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (93955,'CA','Seas
 INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (92393,'CA','Victorville',NOW());
 INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (92410,'CA','San Bernardino',NOW());
 INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (91791,'CA','West Covina',NOW());
+*/
