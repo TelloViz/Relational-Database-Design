@@ -1,5 +1,12 @@
 USE schemers;
 
+CREATE TABLE IF NOT EXISTS States (
+    StateID VARCHAR(2) NOT NULL,
+    StateName VARCHAR(30) NOT NULL,
+    
+    PRIMARY KEY (StateID)
+);
+
 INSERT INTO states
     VALUES
         ('AL', 'Alabama'),

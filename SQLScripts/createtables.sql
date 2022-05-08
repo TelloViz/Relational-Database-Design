@@ -1,3 +1,6 @@
+/*This file creates all of the empty tables 
+    involved in the Schemers database. */
+
 DROP DATABASE IF EXISTS schemers;
 CREATE DATABASE schemers;
 USE schemers;
