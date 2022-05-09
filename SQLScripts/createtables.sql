@@ -2,7 +2,7 @@
     involved in the Schemers database. */
 
 DROP DATABASE IF EXISTS schemers;
-CREATE DATABASE schemers;
+CREATE SCHEMA schemers;
 USE schemers;
 
 -- Address Stuff

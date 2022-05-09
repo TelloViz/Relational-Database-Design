@@ -5,10 +5,10 @@ $password = "";
 $database = "schemers";
 $port = 3306;
 
-function runSQLFile($relativepath, $servername, $username, $password, $database, $port) {
+function runSQLFile($relativepath, $servername, $username, $password, $port, $database=NULL, ) {
 
   $basepath = dirname( dirname(__FILE__) ); //gives parent of parent of current file
-  $scriptfullpath = $basepath . $relativepath;
+  $scriptfullpath = '"' . $basepath . "/SQLScripts" . $relativepath . '"';
 
   $conn = new mysqli($servername, $username, $password, $database, $port);
 
@@ -16,15 +16,23 @@ function runSQLFile($relativepath, $servername, $username, $password, $database,
   $row = $query->fetch_assoc();
   $sqldir = $row['Value'] . '/bin'; //gets the location of cmd 'mysql' so we can execute .sql files with it without it being on path
 
-  $command = "mysql --user='{$username}' --password='{$password}' -h '{$servername}' -D '{$database}' < '{$scriptfullpath}'";
-  $output = shell_exec($sqldir . '/' . $command);
+  $command = "mysql";
+  if ($database) {
+    //--password='{$password}'
+    $args = " --user='{$username}' -h {$servername} -D {$database} < " . $scriptfullpath;
+  }
+  else {
+    //--password='{$password}' 
+    $args = " --user='{$username}' -h {$servername} < " . $scriptfullpath;
+  }
+  $output = shell_exec($sqldir . '/' . $command . $args . " 2>&1");
+  // return $sqldir . '/' . $command . $args; 
   return $output;
 }
 
 try {
-  $res1 = runSQLFile('/createtables.sql', $servername, $username, $password, '', $port);
-  $res2 = runSQLFile('/CreateAndPopulate_States_ZipCodes.sql', $servername, $username, $password, $database, $port);
-  $res3 = runSQLFile('/MOCK_AddressTable_creation.sql', $servername, $username, $password, $database, $port);
+  $res1 = runSQLFile('/createtables.sql', $servername, $username, $password, $port);
+  $res2 = runSQLFile('/insertalldata.sql', $servername, $username, $password,$port, $database);
 
   $inject = [
     "body" => "<div class='container'>
@@ -32,7 +40,6 @@ try {
                 <ul>
                   <li>Create DB and Tables output: {$res1}</li>
                   <li>Create DB and Tables output: {$res2}</li>
-                  <li>Create DB and Tables output: {$res3}</li>
                 </ul>
               </div>",
     "title" => "Initialize the db success"
