@@ -3,7 +3,15 @@ require_once('../base.php');
 
 session_start();
 
-if (!empty($_POST['email']) && !empty($_POST['password'])) {
+if (isset($_SESSION['userid'])) {
+    header('Refresh:3;url=/cs332');
+    $inject = [
+        "body" => '<div class="container"><p>Already logged in as: ' . $_SESSION['userid'] . ', redirecting...</p><a href="/cs332">Click Here if you dont redirect automatically</a></div>',
+        "title" => 'Success. Logging in...'
+    ];
+    printMain($inject);
+}
+else if (!empty($_POST['email']) && !empty($_POST['password'])) {
     [$error, $userid] = getUser($_POST['email'], $_POST['password']);
     if ($error) {
         $inject = printLoginForm($error);
