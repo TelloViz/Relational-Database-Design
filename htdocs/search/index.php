@@ -3,12 +3,18 @@
 // replace with sql to fetch all posts
 $jsonposts = '{
     "Post1": {
-        "title": "Post1",
-        "description": "Some Description"
+        "PostID": 1,
+        "Title": "Software Engineer III",
+        "EmployerName": "Netflix",
+        "StateID": "CA",
+        "City": "Monrovia"
     },
     "Post2": {
-        "title": "Post2",
-        "description": "Some Other Description"
+        "PostID": 2,
+        "Title": "Data Analyst",
+        "EmployerName": "Google",
+        "StateID": "CA",
+        "City": "San Jose"
     }
 }';
 $posts = json_decode($jsonposts,true);
