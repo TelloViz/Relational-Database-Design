@@ -1,9 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "schemers";
-$port = 3306;
+require_once('base.php');
 
 function doesDBExist() {
   $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], '', $GLOBALS['port']);
@@ -58,7 +54,6 @@ else {
   $inject = printInitTableLink();
 }
 
-require_once('base.php');
 printMain($inject);
 
 ?>
