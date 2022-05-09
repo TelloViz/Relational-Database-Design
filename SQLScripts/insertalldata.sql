@@ -273,4 +273,5 @@ VALUES
 
 INSERT INTO JobBenefits (JobPostID, Time_Stamp)
 VALUES
-    ( )
+    (8, NOW() ),
+    (9, NOW());
