@@ -13,6 +13,7 @@ $inject = [
 
 // if already logged in go home
 if (isset($_SESSION['userid'])) {
+    header('Refresh: 3;url=login.php');
     $inject["body"] = '<div class="container"><p>Already logged in as: ' 
     . $_SESSION['userid'] 
     . ', redirecting...</p><a href="/cs332">Click Here if you dont redirect automatically</a></div>'; 
@@ -26,13 +27,11 @@ else if (!empty($_POST['email'])
 
     [$error , $userid] = makeUserSession($_POST['email'], $_POST['password'], $_POST['firstname'], $_POST['lastname']);
     if ($userid) {
-        $_SESSION['userid'] = $userid;
         $inject['body'] = '<div class="container"><p>Successfully Registered as:' . $_SESSION['userid'] . ', redirecting...</p><a href="/cs332">Click Here if you dont redirect automatically</a></div>';
     }
     else {
         $inject["body"] = '<div class="container"><p>Trying to log in with info:' . var_export($_POST, TRUE) . '</p><p class="danger">' . $error . '</p></div>';
     }
-
 }
 // display form to create user
 else {
@@ -72,8 +71,12 @@ function makeUserSession($email, $password, $firstname, $lastname) {
         'lastname' => $lastname,
     ];
 
-    $userid = createUser($userinfo);
-    return [NULL, $userid];
+    [$error, $userid] = createUser($userinfo);
+    if (isset($userid)) {
+        $_SESSION['userid'] = $userid;
+        return ['userid', TRUE];
+    }
+    return [$error, FALSE];
 }
 
 function checkIfEmailAvailable($email) {
@@ -114,9 +117,12 @@ function createUser($userinfo) {
     $stmt = $conn->prepare("INSERT INTO useraccount (Email, Password, FirstName, LastName) VALUES (?, ?, ?, ?)");
     $stmt->bind_param('ssss', $userinfo['email'], $userinfo['password'],$userinfo['firstname'],$userinfo['lastname']);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $userid = $stmt->insert_id;
     $conn->close();
-    return $result;
+    if (isset($userid)) {
+        return [NULL, $userid];
+    }
+    return ['Failed to create user', NULL];
 }
 
 // -------------------------------- form design ----------------------------------------------
