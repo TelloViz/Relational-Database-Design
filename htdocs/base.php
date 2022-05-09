@@ -1,5 +1,10 @@
 
 <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "schemers";
+$port = 3306;
 
   function issetor(&$var, $default = false) {
       return isset($var) ? $var : $default;

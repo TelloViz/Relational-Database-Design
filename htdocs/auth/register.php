@@ -1,4 +1,9 @@
 <?php 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "schemers";
+$port = 3306;
 
 session_start();
 
@@ -47,14 +52,16 @@ function makeUserSession($email, $password, $firstname, $lastname) {
         $error = "Email Already in use...<a href='login.php'>log in.</a>";
         return [$error, NULL];
     }
-    if (!checkIfEmailValid($email)) {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid Email";
         return [$error, NULL];
     }
-    if (!checkIfPasswordValid($password)) {
-        $error = "Invalid Password";
-        return [$error, NULL];
+
+    [$msg, $valid] = checkIfPasswordValid($password);
+    if (!$valid) {
+        return [$msg, NULL];
     }
+
     // return userid
     $hash = hashPassword($password);
 
@@ -70,26 +77,47 @@ function makeUserSession($email, $password, $firstname, $lastname) {
 }
 
 function checkIfEmailAvailable($email) {
-    return TRUE;
-}
-
-function checkIfEmailValid($email) {
+    $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
+    $stmt = $conn->prepare("SELECT Email FROM useraccount AS ua WHERE ua.email = ?");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $conn->close();
+    if (isset($row['Email'])) { 
+        return FALSE;
+    }
     return TRUE;
 }
 
 function checkIfPasswordValid($password) {
-    return TRUE;
+    $uppercase = preg_match('@[A-Z]@', $password);
+    $lowercase = preg_match('@[a-z]@', $password);
+    $number    = preg_match('@[0-9]@', $password);
+    $specialChars = preg_match('@[^\w]@', $password);
+
+    if (($uppercase && $lowercase && $number && $specialChars && strlen($password) >= 8)) {
+        return ['Strong Password', TRUE];
+    }
+    else {
+        return ['Password should be at least 8 characters in length and should include at least one upper case letter, one lower case letter, one number, and one special character.', FALSE];
+    }
 }
 
 function hashPassword($password) {
     $hash = $password; //should hash instead of storing as plain text
     return $hash;
 }
+
 function createUser($userinfo) {
-    return 'testuser';
+    $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
+    $stmt = $conn->prepare("INSERT INTO useraccount (Email, Password, FirstName, LastName) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param('ssss', $userinfo['email'], $userinfo['password'],$userinfo['firstname'],$userinfo['lastname']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $conn->close();
+    return $result;
 }
-
-
 
 // -------------------------------- form design ----------------------------------------------
 function printRegisterForm($error = "") {
@@ -101,7 +129,7 @@ function printRegisterForm($error = "") {
         <form action="register.php" method="post">
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                <input type="text" class="form-control" id="email" name="email" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
                 <label for="firstname" class="form-label">First Name</label>

@@ -1,9 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "schemers";
-$port = 3306;
+require_once('base.php');
 
 function runSQLFile($relativepath, $servername, $username, $password, $port, $database=NULL, ) {
 
@@ -14,9 +10,8 @@ function runSQLFile($relativepath, $servername, $username, $password, $port, $da
 
   $query = $conn->query("SHOW VARIABLES LIKE 'basedir'");
   $row = $query->fetch_assoc();
-  $sqldir = $row['Value'] . '/bin'; //gets the location of cmd 'mysql' so we can execute .sql files with it without it being on path
+  $sqldir = '"' . $row['Value'] . '/bin/mysql"'; //gets the location of cmd 'mysql' so we can execute .sql files with it without it being on path
 
-  $command = "mysql";
   if ($database) {
     //--password='{$password}'
     $args = " --user='{$username}' -h {$servername} -D {$database} < " . $scriptfullpath;
@@ -25,13 +20,13 @@ function runSQLFile($relativepath, $servername, $username, $password, $port, $da
     //--password='{$password}' 
     $args = " --user='{$username}' -h {$servername} < " . $scriptfullpath;
   }
-  $output = shell_exec($sqldir . '/' . $command . $args . " 2>&1");
+  $output = shell_exec($sqldir . $args . " 2>&1");
   // return $sqldir . '/' . $command . $args; 
   return $output;
 }
 
 try {
-  $res1 = runSQLFile('/createtables.sql', $servername, $username, $password, $port);
+  $res1 = runSQLFile('/createtables.sql', $GLOBALS['servername'], $GLOBALS['$username'],$GLOBALS['$password'], $GLOBALS['$port']);
   $res2 = runSQLFile('/insertalldata.sql', $servername, $username, $password,$port, $database);
 
   $inject = [
@@ -52,7 +47,6 @@ catch (Exception $e) {
   ];
 }
 
-require_once('base.php');
 printMain($inject);
 ?>
 
