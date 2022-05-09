@@ -270,3 +270,7 @@ INSERT INTO JobPosts (EmployerID, EducationID, JobTypeID, ExpReqID, AddressID, S
 VALUES
     (41, 4, 3, 2, 5, 15000, 18000, "Burger Flip Specialist", "burgermeistermeisterburger@juno.com", NOW()),
     (37, 5, 4, 3, 8, 80000, 180000, "Walmart Receipt Highlighter Security Personnel", "NeonStreaks@savemoney.com", NOW());
+
+INSERT INTO JobBenefits (JobPostID, Time_Stamp)
+VALUES
+    ( )
