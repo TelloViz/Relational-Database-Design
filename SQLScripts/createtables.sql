@@ -157,9 +157,8 @@ CREATE TABLE IF NOT EXISTS JobPosts (
 
 -- require job foreign key
 CREATE TABLE IF NOT EXISTS JobBenefits (
-    BenefitID INT(5) NOT NULL AUTO_INCREMENT,
+    BenefitID INT(5) NOT NULL,
     JobPostID INT(5) NOT NULL,
-    Title VARCHAR(255) NOT NULL,
     Time_Stamp DATETIME NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (BenefitID, JobPostID),

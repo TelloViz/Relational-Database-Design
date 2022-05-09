@@ -202,3 +202,82 @@ VALUES
     ("Mid-Level", NOW()),
     ("Senior Level", NOW());
 
+INSERT INTO JobTypes(Title, Time_Stamp)
+VALUES
+    ("Full-Time", NOW()),
+    ("Part-Time", NOW()),
+    ("Contract", NOW()),
+    ("Temporary", NOW()),
+    ("Internship", NOW());
+
+INSERT INTO Employee(EducationID, Time_Stamp)
+VALUES
+    (1, NOW()),
+    (3, NOW()),
+    (5, NOW()),
+    (4, NOW()),
+    (3, NOW()),
+    (1, NOW()),
+    (2, NOW()),
+    (3, NOW()),
+    (5, NOW());
+
+    INSERT INTO UserAccount(Email, EmployeeID, FirstName, LastName, Phone, Password, Time_Stamp)
+    VALUES
+    ('dirce0@newsvine.com', 5, 'Darin', 'Irce', '126-328-4062', 'jm8q2hDXp', NOW()),
+    ('tmulholland1@qq.com', 6, 'Trent', 'Mulholland', '769-861-4553', '7pV7ew73oz', NOW()),
+    ('gdebiasi2@statcounter.com', 7, 'Gardie', 'De Biasi', '457-727-6737', 'g2dssSarz', NOW()),
+    ('kwarkup3@t.co', 8, 'Kalindi', 'Warkup', '948-342-5010', 'NuTGs3aDod', NOW()),
+    ('gmargarson8@weather.com', 9, 'Gwenneth', 'Margarson', '918-585-1562', '9856r4fEGS', NOW()),
+    ('econre9@deviantart.com', 10, 'Erda', 'Conre', '239-317-1782', 'J1eS31G6w', NOW()),
+    ('kseillera@ca.gov', 11, 'Karla', 'Seiller', '442-879-7365', 'LD56v7', NOW()),
+    ('sbirkbeckb@issuu.com', 12, 'Shannon', 'Birkbeck', '179-558-8136', 'jOuXZmROv60', NOW()),
+    ('dludgatec@vkontakte.ru', 13, 'Dela', 'Ludgate', '433-657-8608', 'xjXrocN6U1E', NOW()),
+    ('ininnottid@sphinn.com', 14, 'Ingra', 'Ninnotti', '863-475-7547', 'nlUenl', NOW()),
+    ('dvicke@homestead.com', 15, 'Doti', 'Vick', '639-681-5821', 'GYobGeTz', NOW()),
+    ('mtidcombf@home.pl', 16, 'Myrah', 'Tidcomb', '897-243-6264', 'sKQ7pz3', NOW()),
+    ('ewickersleyg@dell.com', 17, 'Ermengarde', 'Wickersley', '586-761-9950', 'IMuROnjTc', NOW()),
+    ('nthomkeh@woothemes.com', 18, 'Nedi', 'Thomke', '592-659-5056', '2wUnlf', NOW()),
+    ('barnaudeti@stumbleupon.com', 19, 'Bernette', 'Arnaudet', '158-735-0646', 'emziQOIb', NOW()),
+    ('sgaskallj@trellian.com', 20, 'Sharona', 'Gaskall', '402-952-8512', 's8rAqwb', NOW()),
+    ('gellerk@google.co.jp', 21, 'Gael', 'Eller', '407-254-0551', 'nciAZKL', NOW()),
+    ('dguyonnetl@examiner.com', 22, 'Dorotea', 'Guyonnet', '184-715-6183', 'tEASYZyUptJo', NOW()),
+    ('jschulkenm@springer.com', 23, 'Jermayne', 'Schulken', '428-623-0534', 'EmM0jl', NOW()),
+    ('twattsn@1und1.de', 24, 'Thorndike', 'Watts', '538-420-8182', 'g7dZSR', NOW()),
+    ('lvaneschio@printfriendly.com', 25, 'Loy', 'Vaneschi', '800-110-0185', 'pQJDgWsdjk', NOW());
+
+INSERT INTO Employers (AddressID, EmployerName, Email, Phone, Time_Stamp) 
+VALUES 
+    (1, 'Maurie Niave', 'mniave0@163.com', '192-402-5479', NOW()),
+    (2, 'Conway Ivery', 'civery1@nasa.gov', '476-253-5088', NOW()),
+    (3, 'Yulma Asel', 'yasel2@artisteer.com', '852-726-8127', NOW()),
+    (4, 'Mill Wink', 'mwink3@msn.com', '295-895-4986', NOW()),
+    (5, 'Gibb Kerin', 'gkerin4@comcast.net', '640-476-4882', NOW()),
+    (6, 'Ali Shepton', 'ashepton5@networkadvertising.org', '577-297-2767', NOW()),
+    (7, 'Averil Rowly', 'arowly6@google.co.jp', '820-940-5141', NOW()),
+    (8, 'Gerik Swainson', 'gswainson7@github.com', '175-122-3698', NOW()),
+    (9, 'Roxanne McMearty', 'rmcmearty8@un.org', '155-157-5760', NOW()),
+    (10, 'Jada Cockling', 'jcockling9@altervista.org', '988-308-7328', NOW()),
+    (11, 'Konstantine Mebs', 'kmebsa@china.com.cn', '660-210-4068', NOW());
+
+
+INSERT INTO EmployerAdmin (UserID, EmployerID, RoleID, Time_Stamp)
+VALUES
+    (7, 35, 7, NOW());
+    (5, 32, 3, NOW());
+
+INSERT INTO JobPosts (EmployerID, EducationID, JobTypeID, ExpReqID, AddressID, SalaryMin, SalaryMax, Title, ContactEmail, Time_Stamp)
+VALUES
+    (41, 4, 3, 2, 5, 15000, 18000, "Burger Flip Specialist", "burgermeistermeisterburger@juno.com", NOW()),
+    (37, 5, 4, 3, 8, 80000, 180000, "Walmart Receipt Highlighter Security Personnel", "NeonStreaks@savemoney.com", NOW());
+
+INSERT INTO JobBenefits (BenefitID,JobPostID, Time_Stamp)
+VALUES
+    (1,8, NOW() ),
+    (2,8, NOW()),
+    (1,9, NOW()),
+    (2,9, NOW()),
+    (3,9, NOW()),
+    (4,9, NOW()),
+    (5,9, NOW()),
+    (6,9, NOW());
