@@ -1,3 +1,7 @@
+/*This file creates all of the empty tables 
+    involved in the Schemers database. */
+
+DROP DATABASE IF EXISTS schemers;
 CREATE SCHEMA schemers;
 USE schemers;
 
@@ -9,15 +13,14 @@ CREATE TABLE IF NOT EXISTS States (
     PRIMARY KEY (StateID)
 );
 
-CREATE TABLE IF NOT EXISTS ZipCodes (
-    ZipCodeID INT(5) UNSIGNED NOT NULL,
-    Time_Stamp DATETIME NOT NULL DEFAULT NOW() NOT NULL,
-    StateID VARCHAR(2) NOT NULL,
-    City VARCHAR(255) NOT NULL,
-    
-    FOREIGN KEY (StateID) REFERENCES States (StateID),
+CREATE TABLE IF NOT EXISTS ZipCodes(
+        ZipCodeID INT(5) UNSIGNED NOT NULL,
+        StateID VARCHAR(2) NOT NULL,
+        City VARCHAR(255) NOT NULL, 
+        Time_Stamp DATETIME NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (StateID) REFERENCES States(StateID), 
     PRIMARY KEY (ZipCodeID)
-);
+); 
 
 CREATE TABLE IF NOT EXISTS Addresses (
     AddressID VARCHAR(255) NOT NULL,
@@ -28,7 +31,6 @@ CREATE TABLE IF NOT EXISTS Addresses (
     FOREIGN KEY (ZipCodeID) REFERENCES ZipCodes (ZipCodeID),
     PRIMARY KEY (AddressID)
 );
-
 
 -- Base data tables with no foreign keys
 CREATE TABLE IF NOT EXISTS AppStatus (
@@ -51,7 +53,6 @@ CREATE TABLE IF NOT EXISTS Roles (
     Time_Stamp DATETIME NOT NULL DEFAULT NOW(),
     PRIMARY KEY (RoleID)
 );
-
 
 CREATE TABLE IF NOT EXISTS Benefits (
     BenefitID INT(5) NOT NULL,
