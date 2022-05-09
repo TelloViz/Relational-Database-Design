@@ -30,12 +30,11 @@ else if (!empty($_POST['email'])
         $inject['body'] = '<div class="container"><p>Successfully Registered as:' . $_SESSION['userid'] . ', redirecting...</p><a href="/cs332">Click Here if you dont redirect automatically</a></div>';
     }
     else {
-        $inject["body"] = '<div class="container"><p>Trying to log in with info:' . var_export($_POST, TRUE) . '</p><p class="danger">' . $error . '</p></div>';
+        $inject = printRegisterForm($error);
     }
 }
-// display form to create user
 else {
-    $inject = printRegisterForm(var_export($_POST, TRUE)); 
+    $inject = printRegisterForm(); 
 }
 
 require_once('../base.php');
