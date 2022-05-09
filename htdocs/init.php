@@ -1,7 +1,7 @@
 <?php
 require_once('base.php');
 
-function runSQLFile($relativepath, $servername, $username, $password, $port, $database=NULL, ) {
+function runSQLFile($relativepath, $servername, $username, $password, $port, $database=NULL) {
 
   $basepath = dirname( dirname(__FILE__) ); //gives parent of parent of current file
   $scriptfullpath = '"' . $basepath . "/SQLScripts" . $relativepath . '"';
@@ -25,8 +25,8 @@ function runSQLFile($relativepath, $servername, $username, $password, $port, $da
 }
 
 try {
-  $res1 = runSQLFile('/createtables.sql', $GLOBALS['servername'], $GLOBALS['$username'],$GLOBALS['$password'], $GLOBALS['$port']);
-  $res2 = runSQLFile('/insertalldata.sql', $servername, $username, $password,$port, $database);
+  $res1 = runSQLFile('/createtables.sql', $GLOBALS['servername'], $GLOBALS['username'],$GLOBALS['password'], $GLOBALS['port']);
+  $res2 = runSQLFile('/insertalldata.sql', $GLOBALS['severname'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['port'], $GLOBALS['database']);
 
   $inject = [
     "body" => "<div class='container'>
