@@ -202,3 +202,22 @@ VALUES
     ("Mid-Level", NOW()),
     ("Senior Level", NOW());
 
+INSERT INTO JobTypes(Title, Time_Stamp)
+VALUES
+    ("Full-Time", NOW()),
+    ("Part-Time", NOW()),
+    ("Contract", NOW()),
+    ("Temporary", NOW()),
+    ("Internship", NOW());
+
+INSERT INTO Employee(EducationID, Time_Stamp)
+VALUES
+    (1, NOW()),
+    (3, NOW()),
+    (5, NOW()),
+    (4, NOW()),
+    (3, NOW()),
+    (1, NOW()),
+    (2, NOW()),
+    (3, NOW()),
+    (5, NOW());
