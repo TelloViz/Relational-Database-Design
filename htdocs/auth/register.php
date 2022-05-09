@@ -129,11 +129,7 @@ function printRegisterForm($error = "") {
         <form action="register.php" method="post">
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
-<<<<<<< HEAD
                 <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" required>
-=======
-                <input type="text" class="form-control" id="email" name="email" aria-describedby="emailHelp">
->>>>>>> gabe
             </div>
             <div class="mb-3">
                 <label for="firstname" class="form-label">First Name</label>
