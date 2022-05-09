@@ -271,7 +271,13 @@ VALUES
     (41, 4, 3, 2, 5, 15000, 18000, "Burger Flip Specialist", "burgermeistermeisterburger@juno.com", NOW()),
     (37, 5, 4, 3, 8, 80000, 180000, "Walmart Receipt Highlighter Security Personnel", "NeonStreaks@savemoney.com", NOW());
 
-INSERT INTO JobBenefits (JobPostID, Time_Stamp)
+INSERT INTO JobBenefits (BenefitID,JobPostID, Time_Stamp)
 VALUES
-    (8, NOW() ),
-    (9, NOW());
+    (1,8, NOW() ),
+    (2,8, NOW()),
+    (1,9, NOW()),
+    (2,9, NOW()),
+    (3,9, NOW()),
+    (4,9, NOW()),
+    (5,9, NOW()),
+    (6,9, NOW());
