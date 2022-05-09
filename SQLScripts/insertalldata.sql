@@ -265,3 +265,8 @@ INSERT INTO EmployerAdmin (UserID, EmployerID, RoleID, Time_Stamp)
 VALUES
     (7, 35, 7, NOW());
     (5, 32, 3, NOW());
+
+INSERT INTO JobPosts (EmployerID, EducationID, JobTypeID, ExpReqID, AddressID, SalaryMin, SalaryMax, Title, ContactEmail, Time_Stamp)
+VALUES
+    (41, 4, 3, 2, 5, 15000, 18000, "Burger Flip Specialist", "burgermeistermeisterburger@juno.com", NOW()),
+    (37, 5, 4, 3, 8, 80000, 180000, "Walmart Receipt Highlighter Security Personnel", "NeonStreaks@savemoney.com", NOW());
