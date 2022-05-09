@@ -1,9 +1,5 @@
 <?php 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "schemers";
-$port = 3306;
+require_once('../base.php');
 
 session_start();
 
@@ -13,7 +9,7 @@ $inject = [
 
 // if already logged in go home
 if (isset($_SESSION['userid'])) {
-    header('Refresh: 3;url=login.php');
+    header('Refresh: 2;url=/cs332');
     $inject["body"] = '<div class="container"><p>Already logged in as: ' 
     . $_SESSION['userid'] 
     . ', redirecting...</p><a href="/cs332">Click Here if you dont redirect automatically</a></div>'; 
@@ -37,7 +33,6 @@ else {
     $inject = printRegisterForm(); 
 }
 
-require_once('../base.php');
 printMain($inject);
 
 

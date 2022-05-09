@@ -146,59 +146,59 @@ INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (92581,'CA','San 
 INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (91766,'CA','Pomona',NOW());
 INSERT INTO ZipCodes(ZipCodeID,StateID,City,Time_Stamp) VALUES (93711,'CA','Fresno',NOW());
 
-INSERT INTO Addresses(AddressID,ZipCodeID,Time_Stamp,StreetAddress) VALUES
- ('H9GYP6RL',93242,NOW(),'7783 Vine Street')
-,('99jL32w6',93611,NOW(),'12367 Adams St')
-,('U7bNwtID',93309,NOW(),'1237 W Eymann Ave')
-,('jjSwnj9T',91340,NOW(),'1238 Lonestar Dr')
-,('9rQCnJiz',91750,NOW(),'1239 Ashby Ave')
-,('R6YJS6Po',91016,NOW(),'12388 Loraine Ave')
-,('XGLam0dZ',93901,NOW(),'12373 Windchime Pl')
-,('Aad9BPEx',93907,NOW(),'1237 E 24th St')
-,('Ir9hq0KU',93926,NOW(),'1237 N Lowery St')
-,('088qGXhH',92704,NOW(),'12376 5th St')
-,('5QQ13378',92806,NOW(),'1239 Ashby Ave');
+INSERT INTO Addresses(ZipCodeID,Time_Stamp,StreetAddress) VALUES
+ (93242,NOW(),'7783 Vine Street')
+,(93611,NOW(),'12367 Adams St')
+,(93309,NOW(),'1237 W Eymann Ave')
+,(91340,NOW(),'1238 Lonestar Dr')
+,(91750,NOW(),'1239 Ashby Ave')
+,(91016,NOW(),'12388 Loraine Ave')
+,(93901,NOW(),'12373 Windchime Pl')
+,(93907,NOW(),'1237 E 24th St')
+,(93926,NOW(),'1237 N Lowery St')
+,(92704,NOW(),'12376 5th St')
+,(92806,NOW(),'1239 Ashby Ave');
 
-INSERT INTO AppStatus(AppStatusID,Title,Time_Stamp) 
+INSERT INTO AppStatus(Title,Time_Stamp) 
 VALUES 
 (
-    0, "Processing", NOW()),
-    (1, "Approved", NOW()),
-    (2, "Rejected", NOW()),
-    (3, "Final Review", NOW());
+    "Processing", NOW()),
+    ("Approved", NOW()),
+    ("Rejected", NOW()),
+    ("Final Review", NOW());
 
-INSERT INTO Education(EducationID,Title,Time_Stamp) 
+INSERT INTO Education(Title,Time_Stamp) 
 VALUES 
-    (0, "No Education Required", NOW()),
-    (1, "High School Degree", NOW()),
-    (2, "Associate's Degree", NOW()),
-    (3, "Bachelor's Degree", NOW()),
-    (4, "Master's Degree", NOW()),
-    (5, "Doctoral Degree", NOW());
+    ("No Education Required", NOW()),
+    ("High School Degree", NOW()),
+    ("Associate's Degree", NOW()),
+    ("Bachelor's Degree", NOW()),
+    ("Master's Degree", NOW()),
+    ("Doctoral Degree", NOW());
 
 
-INSERT INTO Roles(RoleID,Title,Time_Stamp) 
+INSERT INTO Roles(Title,Time_Stamp) 
 VALUES 
-    (0, "Owner", NOW()),
-    (1, "CEO", NOW()),
-    (2, "Assistant/Manager", NOW()),
-    (3, "Human Resources Generalist", NOW()),
-    (4, "Hiring Manager", NOW()),
-    (5, "Recruiter", NOW()),
-    (6, "Other", NOW());
+    ("Owner", NOW()),
+    ("CEO", NOW()),
+    ("Assistant/Manager", NOW()),
+    ("Human Resources Generalist", NOW()),
+    ("Hiring Manager", NOW()),
+    ("Recruiter", NOW()),
+    ("Other", NOW());
 
-INSERT INTO Benefits(BenefitID,Title,Time_Stamp) 
+INSERT INTO Benefits(Title,Time_Stamp) 
 VALUES 
-    (0, "Health Insurance", NOW()),
-    (1, "Vision Insurance", NOW()),
-    (2, "Dental Insurance", NOW()),
-    (3, "Life Insurance", NOW()),
-    (4, "Pension", NOW()),
-    (5, "401k", NOW());
+    ("Health Insurance", NOW()),
+    ("Vision Insurance", NOW()),
+    ("Dental Insurance", NOW()),
+    ("Life Insurance", NOW()),
+    ("Pension", NOW()),
+    ("401k", NOW());
 
-INSERT INTO ExpReq(ExpReqID,Title,Time_Stamp) 
+INSERT INTO ExpReq(Title,Time_Stamp) 
 VALUES 
-    (0, "Entry level", NOW()),
-    (1, "Mid-Level", NOW()),
-    (2, "Senior Level", NOW());
+    ("Entry level", NOW()),
+    ("Mid-Level", NOW()),
+    ("Senior Level", NOW());
 

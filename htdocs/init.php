@@ -20,13 +20,13 @@ function runSQLFile($relativepath, $servername, $username, $password, $port, $da
     $args = " --user='{$username}' -h {$servername} < " . $scriptfullpath;
   }
   $output = shell_exec($sqldir . $args . " 2>&1");
-  // return $sqldir . '/' . $command . $args; 
+  // return $sqldir . $args . " 2>&1";
   return $output;
 }
 
 try {
   $res1 = runSQLFile('/createtables.sql', $GLOBALS['servername'], $GLOBALS['username'],$GLOBALS['password'], $GLOBALS['port']);
-  $res2 = runSQLFile('/insertalldata.sql', $GLOBALS['severname'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['port'], $GLOBALS['database']);
+  $res2 = runSQLFile('/insertalldata.sql', $GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['port'], $GLOBALS['database']);
 
   $inject = [
     "body" => "<div class='container'>

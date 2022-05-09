@@ -27,7 +27,7 @@ else {
 
 function getUser($email, $password) {
     $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
-    $stmt = $conn->prepare("SELECT UserID FROM useraccount AS ua WHERE ua.Email = ? and ua.Password = ?");
+    $stmt = $conn->prepare("SELECT UserID FROM useraccount AS ua WHERE ua.Email = ? AND ua.Password = ?");
     $stmt->bind_param('ss', $email, $password);
     $stmt->execute();
     $result = $stmt->get_result();
