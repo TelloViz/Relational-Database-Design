@@ -222,7 +222,6 @@ VALUES
     (3, NOW()),
     (5, NOW());
 
-    USING schemers;
     INSERT INTO UserAccount(Email, EmployeeID, FirstName, LastName, Phone, Password, Time_Stamp)
     VALUES
     ('dirce0@newsvine.com', 5, 'Darin', 'Irce', '126-328-4062', 'jm8q2hDXp', NOW()),
@@ -246,3 +245,19 @@ VALUES
     ('jschulkenm@springer.com', 23, 'Jermayne', 'Schulken', '428-623-0534', 'EmM0jl', NOW()),
     ('twattsn@1und1.de', 24, 'Thorndike', 'Watts', '538-420-8182', 'g7dZSR', NOW()),
     ('lvaneschio@printfriendly.com', 25, 'Loy', 'Vaneschi', '800-110-0185', 'pQJDgWsdjk', NOW());
+
+INSERT INTO Employers (AddressID, EmployerName, Email, Phone, Time_Stamp) 
+VALUES 
+    (1, 'Maurie Niave', 'mniave0@163.com', '192-402-5479', NOW()),
+    (2, 'Conway Ivery', 'civery1@nasa.gov', '476-253-5088', NOW()),
+    (3, 'Yulma Asel', 'yasel2@artisteer.com', '852-726-8127', NOW()),
+    (4, 'Mill Wink', 'mwink3@msn.com', '295-895-4986', NOW()),
+    (5, 'Gibb Kerin', 'gkerin4@comcast.net', '640-476-4882', NOW()),
+    (6, 'Ali Shepton', 'ashepton5@networkadvertising.org', '577-297-2767', NOW()),
+    (7, 'Averil Rowly', 'arowly6@google.co.jp', '820-940-5141', NOW()),
+    (8, 'Gerik Swainson', 'gswainson7@github.com', '175-122-3698', NOW()),
+    (9, 'Roxanne McMearty', 'rmcmearty8@un.org', '155-157-5760', NOW()),
+    (10, 'Jada Cockling', 'jcockling9@altervista.org', '988-308-7328', NOW()),
+    (11, 'Konstantine Mebs', 'kmebsa@china.com.cn', '660-210-4068', NOW());
+
+
