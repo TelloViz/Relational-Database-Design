@@ -1,9 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "schemers";
-$port = 3306;
+require_once('base.php');
 
 function runSQLFile($relativepath, $servername, $username, $password, $port, $database=NULL, ) {
 
@@ -29,7 +25,7 @@ function runSQLFile($relativepath, $servername, $username, $password, $port, $da
 }
 
 try {
-  $res1 = runSQLFile('/createtables.sql', $servername, $username, $password, $port);
+  $res1 = runSQLFile('/createtables.sql', $GLOBALS['servername'], $GLOBALS['$username'],$GLOBALS['$password'], $GLOBALS['$port']);
   $res2 = runSQLFile('/insertalldata.sql', $servername, $username, $password,$port, $database);
 
   $inject = [
@@ -50,7 +46,6 @@ catch (Exception $e) {
   ];
 }
 
-require_once('base.php');
 printMain($inject);
 ?>
 
