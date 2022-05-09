@@ -261,3 +261,7 @@ VALUES
     (11, 'Konstantine Mebs', 'kmebsa@china.com.cn', '660-210-4068', NOW());
 
 
+INSERT INTO EmployerAdmin (UserID, EmployerID, RoleID, Time_Stamp)
+VALUES
+    (7, 35, 7, NOW());
+    (5, 32, 3, NOW());
