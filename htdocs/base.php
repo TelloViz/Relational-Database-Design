@@ -44,6 +44,9 @@ $port = 3306;
               <a class="nav-link" href="/cs332/auth/logout.php">Logout</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="/cs332/employer/employercreate.php">Create Employer</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="/cs332/search/">All Posts</a>
             </li>
             <li class="nav-item">
