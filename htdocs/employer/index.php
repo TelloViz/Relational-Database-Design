@@ -1,6 +1,8 @@
 <?php 
 require_once('../base.php');
 
+session_start();
+
 // check if url like localhost/cs332/employer/?employerid=12345
 if (isset($_GET['employerid'])) {
     // look up employer 12345 from url in sql
