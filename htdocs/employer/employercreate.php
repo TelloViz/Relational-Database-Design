@@ -15,8 +15,8 @@ if(!isset($_SESSION['userid'])) {
 // otherwise, user is registered & logged in 
 // create employer 
 else if ( isset($_SESSION['employerid']) ) {
-    header('Refresh: 2;url=/cs332/employer/index.php');
-    $inject['body'] = '<div class="container"><p class="alert-danger">Already an Employer. Redirecting...</p><a href="/cs332/employer/index.php">Click Here if you dont redirect automatically</a></div>';
+    header('Refresh: 2;url=/cs332/employer/?employerid=' . $_SESSION['employerid']);
+    $inject['body'] = '<div class="container"><p class="alert-danger">Already an Employer. Redirecting...</p><a href="/cs332/employer/?employerid=' . $_SESSION['employerid'] . '">Click Here if you dont redirect automatically</a></div>';
 }
 else {
     if(!empty($_POST['employername']) 
@@ -28,13 +28,13 @@ else {
     && !empty($_POST['zipcode'])
     && !empty($_POST['userrole'])) {
 
-        [$error, $employerid] = makeEmployer($_POST['employername'], $_POST['email'], $_POST['phonenumber'], 
+        [$error, $success] = makeEmployer($_POST['employername'], $_POST['email'], $_POST['phonenumber'], 
                             $_POST['streetaddress'], $_POST['city'], $_POST['state'], $_POST['zipcode'], $_POST['userrole']);
-        $inject['body'] = 'employerid';
-        if(!$error) {
-            header('Refresh: 2;url=/cs332/employer/index.php');
+        $inject['body'] = $_SESSION['employerid'];
+        if($success) {
+            header('Refresh: 2;url=/cs332/employer/?employerid=' . $_SESSION['employerid']);
             $inject['body'] = '<div class="container"><p>Successfully Created Employer as:' . $_SESSION['employerid'] . 
-            ', redirecting...</p><a href="/cs332/employer/index.php">Click Here if you dont redirect automatically</a></div>';
+            ', redirecting...</p><a href="/cs332/employer/?employerid=' . $_SESSION['employerid'] . '">Click Here if you dont redirect automatically</a></div>';
         }
         else { 
             $inject = printEmployerForm($error);
