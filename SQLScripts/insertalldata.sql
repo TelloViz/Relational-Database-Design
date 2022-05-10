@@ -220,13 +220,29 @@ VALUES
     (1, NOW()),
     (2, NOW()),
     (3, NOW()),
-    (5, NOW());
+    (5, NOW()),
+    (3, NOW()),
+    (5, NOW()),
+    (4, NOW()),
+    (3, NOW()),
+    (1, NOW()),
+    (2, NOW()),
+    (3, NOW()),
+    (5, NOW()),
+    (3, NOW()),
+    (5, NOW()),
+    (3, NOW()),
+    (5, NOW()),
+    (4, NOW()),
+    (3, NOW()),
+    (3, NOW()),
+    (1, NOW());
 
-    INSERT INTO UserAccount(Email, EmployeeID, FirstName, LastName, Phone, Password, Time_Stamp)
+INSERT INTO UserAccount(Email, EmployeeID, FirstName, LastName, Phone, Password, Time_Stamp)
     VALUES
-    ('dirce0@newsvine.com', 5, 'Darin', 'Irce', '126-328-4062', 'jm8q2hDXp', NOW()),
-    ('tmulholland1@qq.com', 6, 'Trent', 'Mulholland', '769-861-4553', '7pV7ew73oz', NOW()),
-    ('gdebiasi2@statcounter.com', 7, 'Gardie', 'De Biasi', '457-727-6737', 'g2dssSarz', NOW()),
+    ('dirce0@newsvine.com', NULL, 'Darin', 'Irce', '126-328-4062', 'jm8q2hDXp', NOW()),
+    ('tmulholland1@qq.com', NULL, 'Trent', 'Mulholland', '769-861-4553', '7pV7ew73oz', NOW()),
+    ('gdebiasi2@statcounter.com', NULL, 'Gardie', 'De Biasi', '457-727-6737', 'g2dssSarz', NOW()),
     ('kwarkup3@t.co', 8, 'Kalindi', 'Warkup', '948-342-5010', 'NuTGs3aDod', NOW()),
     ('gmargarson8@weather.com', 9, 'Gwenneth', 'Margarson', '918-585-1562', '9856r4fEGS', NOW()),
     ('econre9@deviantart.com', 10, 'Erda', 'Conre', '239-317-1782', 'J1eS31G6w', NOW()),
@@ -263,21 +279,20 @@ VALUES
 
 INSERT INTO EmployerAdmin (UserID, EmployerID, RoleID, Time_Stamp)
 VALUES
-    (7, 35, 7, NOW());
-    (5, 32, 3, NOW());
+    (7, 1, 7, NOW()),
+    (5, 2, 3, NOW());
 
 INSERT INTO JobPosts (EmployerID, EducationID, JobTypeID, ExpReqID, AddressID, SalaryMin, SalaryMax, Title, ContactEmail, Time_Stamp)
 VALUES
-    (41, 4, 3, 2, 5, 15000, 18000, "Burger Flip Specialist", "burgermeistermeisterburger@juno.com", NOW()),
-    (37, 5, 4, 3, 8, 80000, 180000, "Walmart Receipt Highlighter Security Personnel", "NeonStreaks@savemoney.com", NOW());
+    (1, 4, 3, 2, 5, 15000, 18000, "Burger Flip Specialist", "burgermeistermeisterburger@juno.com", NOW()),
+    (2, 5, 4, 3, 8, 80000, 180000, "Walmart Receipt Highlighter Security Personnel", "NeonStreaks@savemoney.com", NOW());
 
 INSERT INTO JobBenefits (BenefitID,JobPostID, Time_Stamp)
 VALUES
-    (1,8, NOW() ),
-    (2,8, NOW()),
-    (1,9, NOW()),
-    (2,9, NOW()),
-    (3,9, NOW()),
-    (4,9, NOW()),
-    (5,9, NOW()),
-    (6,9, NOW());
+    (1,1, NOW() ),
+    (2,1, NOW()),
+    (3,2, NOW()),
+    (4,2, NOW()),
+    (5,2, NOW()),
+    (6,2, NOW());
+    
