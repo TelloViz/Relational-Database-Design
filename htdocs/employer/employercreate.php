@@ -112,7 +112,6 @@ function checkIfEmailAvailable($email) {
 }
 
 function createAddr($addr) {
-    // INSERT addresses
     $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
 
     $stmt = $conn->prepare("INSERT INTO addresses (StreetAddress, ZipCodeID) VALUES (?, ?)");
