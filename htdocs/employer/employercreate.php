@@ -10,7 +10,7 @@ $inject = [
 // if user is not logged in ... redirect to login page
 if(!isset($_SESSION['userid'])) {
     header('Refresh: 2;url=/cs332/auth/login.php');
-    $inject = printLoginForm();    
+    $inject['body'] = '<div class="container"><p class="alert-danger">Must Be Logged in. Redirecting...</p><a href="/cs332/auth/login.php">Click Here if you dont redirect automatically</a></div>';
 }
 // otherwise, user is registered & logged in 
 // create employer 
@@ -23,7 +23,7 @@ else {
     && !empty($_POST['state'])
     && !empty($_POST['zipcode'])) {
 
-        [$error, $userid] = makeEmployerSession($_POST['employername'], $_POST['email'], $_POST['phonenumber'], 
+        [$error, $userid] = makeEmployer($_POST['employername'], $_POST['email'], $_POST['phonenumber'], 
                             $_POST['streetaddress'], $_POST['city'], $_POST['state'], $_POST['zipcode']);
         if($userid) {
             $inject['body'] = '<div class="container"><p>Successfully Created Employer as:' . $_SESSION['userid'] . 
@@ -44,7 +44,7 @@ printMain($inject);
 
 // functions
 
-function makeEmployerSession($employername, $email, $phonenumber, $streetaddress, $city, $state, $zipcode) {
+function makeEmployer($employername, $email, $phonenumber, $streetaddress, $city, $state, $zipcode) {
     $employername = $_POST['employername'];
     $email = $_POST['email'];
     $phonenumber = $_POST['phonenumber'];
@@ -53,39 +53,46 @@ function makeEmployerSession($employername, $email, $phonenumber, $streetaddress
     $state = $_POST['state'];
     $zipcode = $_POST['zipcode'];
 
-    if (!checkIfEmailAvailable($email)) {
-        $error = "Email Already in use...<a href='employercreate.php'>create employer.</a>";
-        return [$error, NULL];
-    }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid Email";
-        return [$error, NULL];
+        return [$error, FALSE];
     }
 
-    $employerinfo= [
-        'employername' => $employername,
-        'email' => $email,
-        'phonenumber' => $phonenumber
-    ];
-
     $employerAddr= [
-        'streetadress' => $streetaddress,
+        'streetaddress' => $streetaddress,
         'city' => $city,
         'state' => $state,
         'zipcode' => $zipcode
     ];
 
-    [$error, $userid] = createEmployerAddr($employerAddr);
-    if (isset($userid)) {
-        $_SESSION['userid'] = $userid;
-        return ['userid', TRUE];
+    [$error, $addressid] = createAddr($employerAddr);
+    if ($error) {
+        return [$error, FALSE];
     }
-    [$error, $userid] = createEmployer($employerinfo);
-    if (isset($userid)) {
-        $_SESSION['userid'] = $userid;
-        return ['userid', TRUE];
+
+    $employerinfo= [
+        'employername' => $employername,
+        'addressid' => $addressid,
+        'email' => $email,
+        'phonenumber' => $phonenumber
+    ];
+
+    [$error, $employerid] = createEmployer($employerinfo);
+    if ($error) {
+        return [$error, FALSE];
     }
-    
+
+   $userinfo = [
+        'userid' => $_SESSION['userid'],
+        'employerid' => $employerid,
+        'roleid' => $userrole;
+   ];
+
+    [$error, $userupdated] = userAddEmployer($userinfo); 
+    if ($userupdated)) {
+        $_SESSION['employerid'] = $employerid;
+        return [NULL , TRUE];
+    }
 
     return [$error, FALSE];
 }
@@ -104,11 +111,39 @@ function checkIfEmailAvailable($email) {
     return TRUE;
 }
 
+function createEmployerAddr($addr) {
+    // INSERT addresses
+    $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
+
+    $stmt = $conn->prepare("INSERT INTO addresses (StreetAddress, ZipCodeID) VALUES (?, ?)");
+    $stmt->bind_param('s', $addr['streetaddress'], $addr['zipcode']);
+    $stmt->execute();
+    $addressid = $stmt->insert_id;
+
+    /*
+    Someday we'll implement adding the zip if it doesn't exist. Idk if a regular user should be able to though
+    if (!$addressid) {
+        $stmt = $conn->prepare("INSERT INTO states (StateName) VALUES (?)");
+        $stmt->bind_param('s', $addr['state']);
+        $stmt->execute();
+        // INSERT zipcodes
+        $stmt = $conn->prepare("INSERT INTO zipcodes (City, ZipCodeID) VALUES (?,?)");
+        $stmt->bind_param('ss', $addr['zipcode'],  $addr['city']);
+        $stmt->execute();
+    }
+    */
+    
+    $conn->close();
+    if (isset($addressid)) {
+        return [NULL, $addressid];
+    }
+    return ['Failed to create Address', NULL];
+}
 
 function createEmployer($employerinfo) {
     $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
-    $stmt = $conn->prepare("INSERT INTO employers (EmployerName, Email, Phone) VALUES (?, ?, ?)");
-    $stmt->bind_param('sss', $employerinfo['employername'], $employerinfo['email'],$employerinfo['phonenumber']);
+    $stmt = $conn->prepare("INSERT INTO employers (EmployerName, AddressID, Email, Phone) VALUES (?, ?,  ?, ?)");
+    $stmt->bind_param('ssss', $employerinfo['employername'], $employerinfo['addressid'], $employerinfo['email'],$employerinfo['phonenumber']);
     $stmt->execute();
     $userid = $stmt->insert_id;
     $conn->close();
@@ -117,33 +152,6 @@ function createEmployer($employerinfo) {
     }
     return ['Failed to create employer', NULL];
 }
-
-function createEmployerAddr($employerAddr) {
-    // INSERT addresses
-    $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
-    $stmt = $conn->prepare("INSERT INTO addresses (StreetAddress) VALUES (?)");
-    $stmt->bind_param('s', $employerAddr['streetaddress']);
-    $stmt->execute();
-    // INSERT states
-    $stmt = $conn->prepare("INSERT INTO states (StateName) VALUES (?)");
-    $stmt->bind_param('s', $employerAddr['state']);
-    $stmt->execute();
-    // INSERT zipcodes
-    $stmt = $conn->prepare("INSERT INTO zipcodes (City, ZipCodeID) VALUES (?,?)");
-    $stmt->bind_param('ss', $employerAddr['zipcode'],  $employerAddr['city']);
-    $stmt->execute();
-
-
-    
-    $userid = $stmt->insert_id;
-    $conn->close();
-    if (isset($userid)) {
-        return [NULL, $userid];
-    }
-    return ['Failed to create Address', NULL];
-}
-
-
 
 // form design
 
