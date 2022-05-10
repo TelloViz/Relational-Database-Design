@@ -14,6 +14,10 @@ if(!isset($_SESSION['userid'])) {
 }
 // otherwise, user is registered & logged in 
 // create employer 
+else if ( isset($_SESSION['employerid']) ) {
+    header('Refresh: 2;url=/cs332/employer/index.php');
+    $inject['body'] = '<div class="container"><p class="alert-danger">Already an Employer. Redirecting...</p><a href="/cs332/employer/index.php">Click Here if you dont redirect automatically</a></div>';
+}
 else {
     if(!empty($_POST['employername']) 
     && !empty($_POST['email'])
@@ -21,21 +25,24 @@ else {
     && !empty($_POST['streetaddress'])
     && !empty($_POST['city'])
     && !empty($_POST['state'])
-    && !empty($_POST['zipcode'])) {
+    && !empty($_POST['zipcode'])
+    && !empty($_POST['userrole'])) {
 
-        [$error, $userid] = makeEmployer($_POST['employername'], $_POST['email'], $_POST['phonenumber'], 
-                            $_POST['streetaddress'], $_POST['city'], $_POST['state'], $_POST['zipcode']);
-        if($userid) {
-            $inject['body'] = '<div class="container"><p>Successfully Created Employer as:' . $_SESSION['userid'] . 
-            ', redirecting...</p><a href="/cs332">Click Here if you dont redirect automatically</a></div>';
-
-        } else { 
+        [$error, $employerid] = makeEmployer($_POST['employername'], $_POST['email'], $_POST['phonenumber'], 
+                            $_POST['streetaddress'], $_POST['city'], $_POST['state'], $_POST['zipcode'], $_POST['userrole']);
+        $inject['body'] = 'employerid';
+        if(!$error) {
+            header('Refresh: 2;url=/cs332/employer/index.php');
+            $inject['body'] = '<div class="container"><p>Successfully Created Employer as:' . $_SESSION['employerid'] . 
+            ', redirecting...</p><a href="/cs332/employer/index.php">Click Here if you dont redirect automatically</a></div>';
+        }
+        else { 
             $inject = printEmployerForm($error);
         }
-    } else {
+    }
+    else {
         $inject = printEmployerForm();
     }
-
 }
 
 printMain($inject);
@@ -44,14 +51,7 @@ printMain($inject);
 
 // functions
 
-function makeEmployer($employername, $email, $phonenumber, $streetaddress, $city, $state, $zipcode) {
-    $employername = $_POST['employername'];
-    $email = $_POST['email'];
-    $phonenumber = $_POST['phonenumber'];
-    $streetaddress = $_POST['streetaddress'];
-    $city = $_POST['city'];
-    $state = $_POST['state'];
-    $zipcode = $_POST['zipcode'];
+function makeEmployer($employername, $email, $phonenumber, $streetaddress, $city, $state, $zipcode, $userrole) {
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid Email";
@@ -85,11 +85,11 @@ function makeEmployer($employername, $email, $phonenumber, $streetaddress, $city
    $userinfo = [
         'userid' => $_SESSION['userid'],
         'employerid' => $employerid,
-        'roleid' => $userrole;
+        'roleid' => $userrole
    ];
 
     [$error, $userupdated] = userAddEmployer($userinfo); 
-    if ($userupdated)) {
+    if (!$error) {
         $_SESSION['employerid'] = $employerid;
         return [NULL , TRUE];
     }
@@ -111,12 +111,12 @@ function checkIfEmailAvailable($email) {
     return TRUE;
 }
 
-function createEmployerAddr($addr) {
+function createAddr($addr) {
     // INSERT addresses
     $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
 
     $stmt = $conn->prepare("INSERT INTO addresses (StreetAddress, ZipCodeID) VALUES (?, ?)");
-    $stmt->bind_param('s', $addr['streetaddress'], $addr['zipcode']);
+    $stmt->bind_param('si', $addr['streetaddress'], $addr['zipcode']);
     $stmt->execute();
     $addressid = $stmt->insert_id;
 
@@ -145,12 +145,25 @@ function createEmployer($employerinfo) {
     $stmt = $conn->prepare("INSERT INTO employers (EmployerName, AddressID, Email, Phone) VALUES (?, ?,  ?, ?)");
     $stmt->bind_param('ssss', $employerinfo['employername'], $employerinfo['addressid'], $employerinfo['email'],$employerinfo['phonenumber']);
     $stmt->execute();
-    $userid = $stmt->insert_id;
+    $employerid = $stmt->insert_id;
     $conn->close();
-    if (isset($userid)) {
-        return [NULL, $userid];
+    if (isset($employerid)) {
+        return [NULL, $employerid];
     }
     return ['Failed to create employer', NULL];
+}
+
+function userAddEmployer($userinfo) {
+    $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
+    $stmt = $conn->prepare("INSERT INTO EmployerAdmin (UserID, EmployerID, RoleID) VALUES (?, ?, ?)");
+    $stmt->bind_param('sss', $userinfo['userid'], $userinfo['employerid'], $userinfo['roleid']);
+    $stmt->execute();
+    $useradminid = $stmt->insert_id;
+    $conn->close();
+    if (isset($useradminid)) {
+        return [NULL, $useradminid];
+    }
+    return ['Failed to add employer role to user', NULL];
 }
 
 // form design
@@ -159,11 +172,11 @@ function printEmployerForm($error = "") {
     // set up create employer form
     $employerBody= '
     <div class="container">  
-        <div class="danger"><p>' . $error . '</p></div>
+        <div class="alert-danger"><p>' . $error . '</p></div>
         <h4>Create Employer</h4>  
         <form action="employercreate.php" method="post">
             <div class="mb-3">
-                <label for="employername" class="form-label">First & Last name</label>
+                <label for="employername" class="form-label">Company Name</label>
                 <input type="text" class="form-control" id="employername" name="employername" aria-describedby="emailHelp" required>
             </div>
             <div class="mb-3">
@@ -172,23 +185,27 @@ function printEmployerForm($error = "") {
             </div>
             <div class="mb-3">
                 <label for="phonenumber" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="phonenumber" name="phonenumber" aria-describedby="emailHelp" required>
+                <input type="phone" class="form-control" id="phonenumber" name="phonenumber" aria-describedby="emailHelp" required>
             </div>
             <div class="mb-3">
                 <label for="streetaddress" class="form-label">Street Address</label>
-                <input type="streetaddress" class="form-control" id="streetaddress" name="streetaddress" required>
+                <input type="text" class="form-control" id="streetaddress" name="streetaddress" required>
             </div>
             <div class="mb-3">
                 <label for="city" class="form-label">City</label>
-                <input type="city" class="form-control" id="city" name="city" required>
+                <input type="text" class="form-control" id="city" name="city" required>
             </div>
             <div class="mb-3">
                 <label for="state" class="form-label">State</label>
-                <input type="state" class="form-control" id="state" name="state" required>
+                <input type="text" class="form-control" id="state" name="state" required>
             </div>
             <div class="mb-3">
                 <label for="zipcode" class="form-label">ZipCode</label>
-                <input type="zipcode" class="form-control" id="zipcode" name="zipcode" required>
+                <input type="text" class="form-control" id="zipcode" name="zipcode" required>
+            </div>
+            <div class="mb-3">
+                <label for="userrole" class="form-label">User Role</label>
+                <input type="text" class="form-control" id="userrole" name="userrole" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
