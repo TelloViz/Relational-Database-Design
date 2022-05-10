@@ -240,9 +240,9 @@ VALUES
 
 INSERT INTO UserAccount(Email, EmployeeID, FirstName, LastName, Phone, Password, Time_Stamp)
     VALUES
-    ('dirce0@newsvine.com', 5, 'Darin', 'Irce', '126-328-4062', 'jm8q2hDXp', NOW()),
-    ('tmulholland1@qq.com', 6, 'Trent', 'Mulholland', '769-861-4553', '7pV7ew73oz', NOW()),
-    ('gdebiasi2@statcounter.com', 7, 'Gardie', 'De Biasi', '457-727-6737', 'g2dssSarz', NOW()),
+    ('dirce0@newsvine.com', NULL, 'Darin', 'Irce', '126-328-4062', 'jm8q2hDXp', NOW()),
+    ('tmulholland1@qq.com', NULL, 'Trent', 'Mulholland', '769-861-4553', '7pV7ew73oz', NOW()),
+    ('gdebiasi2@statcounter.com', NULL, 'Gardie', 'De Biasi', '457-727-6737', 'g2dssSarz', NOW()),
     ('kwarkup3@t.co', 8, 'Kalindi', 'Warkup', '948-342-5010', 'NuTGs3aDod', NOW()),
     ('gmargarson8@weather.com', 9, 'Gwenneth', 'Margarson', '918-585-1562', '9856r4fEGS', NOW()),
     ('econre9@deviantart.com', 10, 'Erda', 'Conre', '239-317-1782', 'J1eS31G6w', NOW()),
