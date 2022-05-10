@@ -1,9 +1,14 @@
 <?php
+require_once('../base.php');
 
     function printSingle($post) {
-        return '<div class="col border">
-                    <h6>Post Title</h6>
-                </div>';
+        $poststring = '<div class="col border p-4">
+                        <a href="../post/?postid=' . $post['PostID'] . '"<h4>' . issetor($post['Title']) . '</h4></a>
+                        <h5>' . issetor($post['EmployerName']) . '</h5>
+                        <p>' . issetor($post['JobDesc']) . '</p>
+                        <p>' . issetor($post['City']) . ', ' . issetor($post['StateID']) . '</p>
+                       </div>';
+        return $poststring;
     }
 
     function printPosts($posts) {

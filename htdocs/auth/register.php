@@ -23,6 +23,7 @@ else if (!empty($_POST['email'])
 
     [$error , $userid] = makeUserSession($_POST['email'], $_POST['password'], $_POST['firstname'], $_POST['lastname']);
     if ($userid) {
+        header('Refresh: 2;url=/cs332');
         $inject['body'] = '<div class="container"><p>Successfully Registered as:' . $_SESSION['userid'] . ', redirecting...</p><a href="/cs332">Click Here if you dont redirect automatically</a></div>';
     }
     else {
