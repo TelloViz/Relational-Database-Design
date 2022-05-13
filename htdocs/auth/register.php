@@ -1,7 +1,6 @@
 <?php 
 require_once('../base.php');
 
-session_start();
 
 $inject = [
         "title" => "Register Page"

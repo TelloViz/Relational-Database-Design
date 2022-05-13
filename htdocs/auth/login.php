@@ -1,7 +1,6 @@
 <?php
 require_once('../base.php');
 
-session_start();
 
 if (isset($_SESSION['userid'])) {
     header('Refresh:3;url=/cs332');

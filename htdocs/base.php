@@ -6,10 +6,32 @@ $password = "";
 $database = "schemers";
 $port = 3306;
 
+session_start();
+
   function issetor(&$var, $default = false) {
       return isset($var) ? $var : $default;
   }
 
+  function loginlinks() {
+  return (isset($_SESSION['userid'])) ? ('
+      <li class="nav-item">
+        <a class="nav-link" href="/cs332/auth/account.php">Account</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cs332/auth/logout.php">Log Out</a>
+      </li>') :
+      ('<li class="nav-item">
+      <a class="nav-link" href="/cs332/auth/">Log In / Register</a>
+    </li>');
+  }
+function employerlinks() {
+  return (isset($_SESSION['employerid'])) ? ('
+      <li class="nav-item">
+        <a class="nav-link" href="/cs332/employer">Employer</a>
+      </li>
+      </li>') : ('');
+  }
+  
   function printMain($inject) {
 
     echo '
@@ -33,17 +55,19 @@ $port = 3306;
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">' .
+          /*
             <li class="nav-item">
               <a class="nav-link" href="/cs332/auth/register.php">Register</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/cs332/auth/login.php">Log In</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/cs332/auth/logout.php">Logout</a>
-            </li>
-            <li class="nav-item">
+          */
+          loginlinks() . 
+          //employeelinks() . 
+          employerlinks() . 
+            '<li class="nav-item">
               <a class="nav-link" href="/cs332/employer/employercreate.php">Create Employer</a>
             </li>
             <li class="nav-item">
@@ -77,9 +101,13 @@ $port = 3306;
       </div>
     </nav>
 
+  <div class="alert-danger">' . issetor($inject['warning']) . '</div>
+  <div class="alert-success">' . issetor($inject['success']) . '</div>
   ' . issetor($inject['body']) . '
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>
 </html>';
-  }
+
+}
+
+?>
