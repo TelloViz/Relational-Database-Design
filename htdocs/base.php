@@ -29,10 +29,22 @@ function employerlinks() {
       <li class="nav-item">
         <a class="nav-link" href="/cs332/employer">Employer</a>
       </li>
-      </li>') : ('');
+      </li>') : (
+      '<li class="nav-item">
+        <a class="nav-link" href="/cs332/employer/create.php">Create Employer</a>
+      </li>');
   }
-  
-  function printMain($inject) {
+
+  //used to fill form with what the user submitted in case it fails
+function ifNotEmptyValueAttribute($value) {
+    if (isset($value)) {
+        if ($value == "") {return "";}
+        return ' value="' . htmlspecialchars($value) . '" ';
+    }
+    return "";
+}
+
+function printMain($inject) {
 
     echo '
   <!doctype html>
@@ -68,9 +80,6 @@ function employerlinks() {
           //employeelinks() . 
           employerlinks() . 
             '<li class="nav-item">
-              <a class="nav-link" href="/cs332/employer/employercreate.php">Create Employer</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="/cs332/search/">All Posts</a>
             </li>
             <li class="nav-item">

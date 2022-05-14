@@ -98,12 +98,6 @@ function createUser($userinfo) {
     return ['Failed to create user', NULL];
 }
 
-function regifNotEmptyValueAtribute($value) {
-    if (isset($value)) {
-        return ' value="' . htmlspecialchars($value) . '" ';
-    }
-    return "";
-}
 // -------------------------------- form design ----------------------------------------------
 function printRegisterForm($error = "") {
     // set up login page
@@ -115,21 +109,21 @@ function printRegisterForm($error = "") {
                         <label for="register_email" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="register_email"
                             name="register_email" aria-describedby="emailHelp"' .
-                            regifNotEmptyValueAtribute(issetor($_POST['register_email'])) .
+                            ifNotEmptyValueAttribute(issetor($_POST['register_email'])) .
                         'required>
                     </div>
                     <div class="mb-3">
                         <label for="register_firstname" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="register_firstname"
                             name="register_firstname" aria-describedby="emailHelp"' .
-                            regifNotEmptyValueAtribute(issetor($_POST['register_firstname'])) .
+                            ifNotEmptyValueAttribute(issetor($_POST['register_firstname'])) .
                         'required>
                     </div>
                     <div class="mb-3">
                         <label for="register_lastname" class="form-label">Last Name</label>
                         <input type="text" class="form-control" id="register_lastname"
                             name="register_lastname" aria-describedby="emailHelp"' .
-                            regifNotEmptyValueAtribute(issetor($_POST['register_lastname'])) .
+                            ifNotEmptyValueAttribute(issetor($_POST['register_lastname'])) .
                         'required>
                     </div>
                     <div class="mb-3">

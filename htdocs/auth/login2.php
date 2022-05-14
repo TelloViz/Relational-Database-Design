@@ -34,14 +34,6 @@ function getUser($email, $password) {
     }
 }
 
-function logifNotEmptyValueAttribute($value) {
-    if (isset($value)) {
-        if ($value == "") {return "";}
-        return ' value="' . htmlspecialchars($value) . '" ';
-    }
-    return "";
-}
-
 function printLoginForm($error = "") {
     // set up login page
     return '<div class="container">  
@@ -51,7 +43,7 @@ function printLoginForm($error = "") {
                     <div class="mb-4">
                         <label for="login_email" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="login_email" name="login_email" aria-describedby="emailHelp"'. 
-                            logifNotEmptyValueAttribute(issetor($_POST['login_email'])) .
+                            ifNotEmptyValueAttribute(issetor($_POST['login_email'])) .
                         'required>
                     </div>
                     <div class="mb-4">
