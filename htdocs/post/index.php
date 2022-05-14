@@ -3,6 +3,7 @@ require_once('../base.php');
 $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
 require_once('getpost.php');
 require_once('makepost.php');
+require_once('postform.php');
 
 $inject = [
     'title'=>'Make and View Posts',
