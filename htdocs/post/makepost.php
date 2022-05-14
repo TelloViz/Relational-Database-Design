@@ -64,11 +64,6 @@ function getJobTypeOpts() {
     }
 }
 
-function getSalaryOpts() {
-
-}
-
-
 function printOneOpt($val, $text) {
     return '<option value="' . $val . '">' . $text . '</option>';
 }
@@ -128,6 +123,7 @@ function printPostForm($P = [], $error = "") {
                     <div class="mb-3">
                         <label for="post_jobtype" class="form-label">Job Type</label>
                         <select class="form-select" id="post_jobtype" name="post_jobtype" required>' .
+                        // Should update to selecting the one in $P['post_jobtype'] if there is one
                             printAsOpts(getJobTypeOpts(), 'JobTypeID', 'Title') . 
                         '</select>
                     </div>
