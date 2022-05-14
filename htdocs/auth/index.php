@@ -1,8 +1,8 @@
 <?php
 require_once('../base.php');
 
-require_once('login2.php');
-require_once('register2.php');
+require_once('login.php');
+require_once('register.php');
 
 $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
 

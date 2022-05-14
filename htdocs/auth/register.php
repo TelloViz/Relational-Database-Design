@@ -1,46 +1,29 @@
-<?php 
-require_once('../base.php');
+<?php
 
+function registerUserPage() {
+    $inject = ['title' => 'Register', 'body'=>''];
+    if (!empty($_POST['register_email'])
+        && !empty($_POST['register_password']) 
+        && !empty($_POST['register_firstname'])
+        && !empty($_POST['register_lastname'])) {
 
-$inject = [
-        "title" => "Register Page"
-];
-
-// if already logged in go home
-if (isset($_SESSION['userid'])) {
-    header('Refresh: 2;url=/cs332');
-    $inject["body"] = '<div class="container"><p>Already logged in as: ' 
-    . $_SESSION['userid'] 
-    . ', redirecting...</p><a href="/cs332">Click Here if you dont redirect automatically</a></div>'; 
-    
-}
-//try to create user and log in
-else if (!empty($_POST['email'])
-        && !empty($_POST['password']) 
-        && !empty($_POST['firstname'])
-        && !empty($_POST['lastname'])) {
-
-    [$error , $userid] = makeUserSession($_POST['email'], $_POST['password'], $_POST['firstname'], $_POST['lastname']);
-    if ($userid) {
-        header('Refresh: 2;url=/cs332');
-        $inject['body'] = '<div class="container"><p>Successfully Registered as:' . $_SESSION['userid'] . ', redirecting...</p><a href="/cs332">Click Here if you dont redirect automatically</a></div>';
+        [$error , $userid] = makeUserSession($_POST['register_email'], $_POST['register_password'], $_POST['register_firstname'], $_POST['register_lastname']);
+        if ($userid) {
+            $inject['success'] = '<span>Successfully Registered as:' . $_SESSION['userid']
+            . ', redirecting...<a href="/cs332">Click Here if you dont redirect automatically</a></span>';
+            $inject['redirect'] = '/cs332';
+        }
+        else {
+            $inject['body'] = printRegisterForm($error);
+        }
     }
     else {
-        $inject = printRegisterForm($error);
+        $inject['body'] = printRegisterForm(); 
     }
+    return $inject;
 }
-else {
-    $inject = printRegisterForm(); 
-}
-
-printMain($inject);
-
-
-// -------------- functions -------------------------------------------------------------
 
 function makeUserSession($email, $password, $firstname, $lastname) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
     if (!checkIfEmailAvailable($email)) {
         $error = "Email Already in use...<a href='login.php'>log in.</a>";
         return [$error, NULL];
@@ -74,13 +57,11 @@ function makeUserSession($email, $password, $firstname, $lastname) {
 }
 
 function checkIfEmailAvailable($email) {
-    $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
-    $stmt = $conn->prepare("SELECT Email FROM useraccount AS ua WHERE ua.email = ?");
+    $stmt = $GLOBALS['conn']->prepare("SELECT Email FROM useraccount AS ua WHERE ua.email = ?");
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    $conn->close();
     if (isset($row['Email'])) { 
         return FALSE;
     }
@@ -107,12 +88,10 @@ function hashPassword($password) {
 }
 
 function createUser($userinfo) {
-    $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
-    $stmt = $conn->prepare("INSERT INTO useraccount (Email, Password, FirstName, LastName) VALUES (?, ?, ?, ?)");
+    $stmt = $GLOBALS['conn']->prepare("INSERT INTO useraccount (Email, Password, FirstName, LastName) VALUES (?, ?, ?, ?)");
     $stmt->bind_param('ssss', $userinfo['email'], $userinfo['password'],$userinfo['firstname'],$userinfo['lastname']);
     $stmt->execute();
     $userid = $stmt->insert_id;
-    $conn->close();
     if (isset($userid)) {
         return [NULL, $userid];
     }
@@ -122,35 +101,39 @@ function createUser($userinfo) {
 // -------------------------------- form design ----------------------------------------------
 function printRegisterForm($error = "") {
     // set up login page
-    $loginBody= '
-    <div class="container">  
-        <div class="danger"><p>' . $error . '</p></div>
-        <h4>Create Account</h4>  
-        <form action="register.php" method="post">
-            <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" required>
-            </div>
-            <div class="mb-3">
-                <label for="firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="firstname" name="firstname" aria-describedby="emailHelp" required>
-            </div>
-            <div class="mb-3">
-                <label for="lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lastname" name="lastname" aria-describedby="emailHelp" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div> ';
-
-    $inject= [
-    "body" => $loginBody,
-    "title" => "Login Page"
-    ];
-    return $inject;
+    return '<div class="container">  
+                <div class="danger"><p>' . $error . '</p></div>
+                <h4>Create Account</h4>  
+                <form action="" method="post">
+                    <div class="mb-3">
+                        <label for="register_email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="register_email"
+                            name="register_email" aria-describedby="emailHelp"' .
+                            ifNotEmptyValueAttribute(issetor($_POST['register_email'])) .
+                        'required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register_firstname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="register_firstname"
+                            name="register_firstname" aria-describedby="emailHelp"' .
+                            ifNotEmptyValueAttribute(issetor($_POST['register_firstname'])) .
+                        'required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register_lastname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="register_lastname"
+                            name="register_lastname" aria-describedby="emailHelp"' .
+                            ifNotEmptyValueAttribute(issetor($_POST['register_lastname'])) .
+                        'required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register_password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="register_password"
+                            name="register_password"' .
+                        'required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div> ';
 }
 ?>

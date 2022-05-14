@@ -118,7 +118,10 @@ function createZip($zip, $city, $state) {
         $stmt->bind_param('iss', $zip, $city, $state);
         $stmt->execute();
         $zipcodeid = $stmt->insert_id;
-        return [NULL, $zipcodeid];
+        if (isset($zipcodeid)) {
+            return [NULL, $zipcodeid];
+        }
+        return ["Failed to create Zip. " . $stmt->error, NULL] ;
     } catch (Exception $e) {
         return ["Failed to create Zip. " . $e, NULL] ;
     }
@@ -126,7 +129,7 @@ function createZip($zip, $city, $state) {
 
 function createOrAddZip($addr) {
     [$error, $zipinfo] = getZip($addr['zipcode'], $GLOBALS['conn']);
-    if (isset($error)) {
+    if (isset($error) && $error == "Zip Not Found") {
         [$error, $zipcode] = createZip($addr['zipcode'],$addr['city'], $addr['state']);
         if (isset($error)) {
             return ['Failed to find/create zipcode. Error: ' . $error, NULL];
