@@ -43,13 +43,16 @@ function makePost($P) {
         isset($P['post_edu']) &&
         isset($P['post_jobtype']))
     {
-        if (
-            checkEducationID($P['post_edu']) &&
-            checkJobTypeID($P['post_jobtype']) &&
-            checkExpReqID($P['post_qual'])
-        )
+        [$eduerr, $eduid] = checkEducationID($P['post_edu']);
+        [$jteerr, $jobtypeid] = checkJobTypeID($P['post_jobtype']);
+        [$experr, $expreqid] = checkExpReqID($P['post_expreq']);
+        if ( isset($eduid) && isset($jobtypeid) && isset($expreqid)) {
+            // Should try to actuall insert into post table now
+            return ['Would normally be success', NULL];
+        }
+        else
         {
-            return ['Would be success', NULL];
+            return [issetor($eduerr) . issetor($jterr) . issetor($experr), NULL];
         }
     }
     else {
@@ -58,15 +61,54 @@ function makePost($P) {
 }
 
 function checkEducationID($eduid) {
-    return TRUE;
-}
-
-function checkJobTypeID($jobtypeid) {
-    return TRUE;
+    try {
+        $stmt = $GLOBALS['conn']->prepare("SELECT EducationID, Title FROM Education WHERE EducationID = ?");
+        $stmt->bind_param('i', $eduid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $edulev = $result->fetch_assoc();
+        if (isset($edulev)) {
+            return [NULL, TRUE];
+        }
+        return ['Failed to find Education level: ' . $eduid, NULL];
+    }
+    catch (Exception $e) {
+        return ['Failed to find Education level: ' . $eduid . $e, NULL];
+    }
 }
 
 function checkExpReqID($expid) {
-    return TRUE;
+    try {
+        $stmt = $GLOBALS['conn']->prepare("SELECT ExpReqID, Title FROM ExpReq WHERE ExpReqID = ?");
+        $stmt->bind_param('i', $expid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $expreq = $result->fetch_assoc();
+        if (isset($expreq)) {
+            return [NULL, $expreq];
+        }
+        return ['Failed to find Experience level: ' . $expid, NULL];
+    }
+    catch (Exception $e) {
+        return ['Failed to find Experience level: ' . $expid . $e, NULL];
+    }
+}
+
+function checkJobTypeID($jobtypeid) {
+    try {
+        $stmt = $GLOBALS['conn']->prepare("SELECT JobTypeID, Title FROM JobTypes WHERE JobTypeID = ?");
+        $stmt->bind_param('i', $jobtypeid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $jobtype = $result->fetch_assoc();
+        if (isset($jobtype)) {
+            return [NULL, $jobtype];
+        }
+        return ['Failed to find JobTypeID: ' . $jobtypeid, NULL];
+    }
+    catch (Exception $e) {
+        return ['Failed to find JobTypeID: ' . $jobtypeid . $e, NULL];
+    }
 }
 
 ?>
