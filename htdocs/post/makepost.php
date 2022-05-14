@@ -34,7 +34,39 @@ $s = "CREATE TABLE IF NOT EXISTS JobPosts (
 );";
 
 function makePost($P) {
-    return ["Error", NULL];
+    if (isset($P['post_title']) &&  
+        isset($P['post_desc']) &&  
+        isset($P['post_qual']) &&  
+        isset($P['post_expreq']) &&  
+        isset($P['post_resp']) &&  
+        isset($P['post_sal_min']) &&
+        isset($P['post_edu']) &&
+        isset($P['post_jobtype']))
+    {
+        if (
+            checkEducationID($P['post_edu']) &&
+            checkJobTypeID($P['post_jobtype']) &&
+            checkExpReqID($P['post_qual'])
+        )
+        {
+            return ['Would be success', NULL];
+        }
+    }
+    else {
+        return ["Missing Required Fields", NULL];
+    }
+}
+
+function checkEducationID($eduid) {
+    return TRUE;
+}
+
+function checkJobTypeID($jobtypeid) {
+    return TRUE;
+}
+
+function checkExpReqID($expid) {
+    return TRUE;
 }
 
 ?>

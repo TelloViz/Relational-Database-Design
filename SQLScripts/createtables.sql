@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS JobPosts (
     EducationID INT(5) NOT NULL,
     JobTypeID INT(10) UNSIGNED NOT NULL,
     ExpReqID  INT(2) NOT NULL,
-    AddressID INT(10) NOT NULL,
+    AddressID INT(10),
     SalaryMin INT(10) UNSIGNED NOT NULL,
     SalaryMax INT(10) UNSIGNED,
     CONSTRAINT SMaxAboveSMin CHECK( SalaryMax >= SalaryMin ),

@@ -31,6 +31,7 @@ else if (isset($_POST)) {
         $inject['body'] = printPostDetails($postdetails);
     }
     else {
+        $inject['warning'] = $error;
         $inject['body'] = printPostForm($_POST);
     }
 }
