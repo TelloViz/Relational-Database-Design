@@ -21,17 +21,12 @@ function getPostDetails($postid) {
 function printPostDetails($postdetails) {
     // convert $postdetails key/value array to pretty html
     // should add any fields I forgot to include, benefits etc
-    $postbody = '<div class="col border p-4">
+    return '<div class="col border p-4">
                     <h4>' . issetor($postdetails['Title']) . '</h4>
                     <h5>' . issetor($postdetails['EmployerName']) . '</h5>
                     <p>' . issetor($postdetails['JobDesc']) . '</p>
                     <p>' . issetor($postdetails['City']) . ', ' . issetor($postdetails['StateID']) . '</p>
                     </div>';
-    $inject = [
-        'body' => $postbody,
-        'title' => 'Post - ' . issetor($postdetails['Title'])
-    ];
-    return $inject;
 }
 
 ?>
