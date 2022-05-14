@@ -26,12 +26,13 @@ if (isset($_GET['postid'])) {
 }
 // if post attempted: try to post and display result, if fail print form with errors
 else if (isset($_POST)) {
-    [$error, $postdetails] = makePost($_POST);
-    if (isset($postdetails)) {
-        $inject['body'] = printPostDetails($postdetails);
+    [$error, $postid] = makePost($_POST);
+    if (isset($postid)) {
+        header('Refresh: 2;url=/cs332/post/?postid=' . $postid);
+        $inject['success'] = '<span>Successfully created post! Redirecting...<a href="/cs332/post/?postid=' . $postid . '">Click Here if you dont redirect automatically</a></span>';
     }
     else {
-        $inject['warning'] = $error;
+        $inject['warning'] = 'Failed to create post: ' . $error;
         $inject['body'] = printPostForm($_POST);
     }
 }
