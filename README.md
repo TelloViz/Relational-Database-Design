@@ -181,11 +181,12 @@
     <h4>Setup</h4>
     <p>Open the Shell from the XAMPP control panel and run: <code>mysql --user=root --password=""</code></p>
     <p>Within the mysql prompt, run <code>GRANT ALL PRIVILEGES on *.* TO 'root'@'localhost'; FLUSH PRIVILEGES;</code></p>
-    <h5>We need to point apached to our folder, pick one of 2</h5>
-        <h6>1: Alias</h6><p>Open the Apache Config file (httpd.conf) from XAMPP, and add an alias to the path where this project's htdocs folder lives.</p>
+    <h5>We need to point apached to our folder, pick one of 2:</h5>
+        <h6>1) Alias</h6><p>Open the Apache Config file (httpd.conf) from XAMPP, and add an alias to the path where this project's htdocs folder lives.</p>
         <p>Then, open the Apache Config file (httpd.conf), and add an alias to the directory. See row 55 of <a href="samplehttpd.conf">samplehttpd.conf</a></p>
-        <br />
-        <h6>2: Direct Copy</h6><p>Find your default apache htdocs folder, make a copy of our htdocs into it so it's like <code>C:/xampp/apache/htdocs/htdocs</code>, then rename the folder to cs332 so it's like <code>C:/xampp/apache/htdocs/cs332</code></p>
+        <h6>2) Direct Copy</h6><p>Find your default apache htdocs folder, make a copy of our htdocs into it so it's like <code>C:/xampp/apache/htdocs/htdocs</code>, then rename the folder to cs332 so it's like <code>C:/xampp/apache/htdocs/cs332</code></p>
+    <br />
+    <h4>Course Info</h4>
     <p class="s1" style="padding-top: 1pt;padding-left: 5pt;text-indent: 0pt;line-height: 170%;text-align: left;">Spring
         2022 CPSC 332-02 - File Structures and Databases Project Description</p>
     <p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 19pt;text-align: left;">Instructor: Hokseng Hun
