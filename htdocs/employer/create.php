@@ -189,6 +189,20 @@ function userAddEmployer($userinfo) {
     }
 }
 
+function getRoleOpts() {
+    try {
+        $result = $GLOBALS['conn']->query("SELECT RoleID, Title FROM Roles");
+        $roles = $result->fetch_all(MYSQLI_ASSOC);
+        if (isset($roles)) {
+            return [NULL, $roles];
+        }
+        return ['Failed to find Roles.', NULL];
+    }
+    catch (Exception $e) {
+        return ['Failed to find Roles. ' . $e, NULL];
+    }
+}
+
 
 function printEmployerForm($error = "") {
     // set up create employer form
@@ -240,10 +254,10 @@ function printEmployerForm($error = "") {
                         'required>
                     </div>
                     <div class="mb-3">
-                        <label for="userrole" class="form-label">User Role</label>
-                        <input type="text" class="form-control" id="userrole" name="userrole"' .
-                            ifNotEmptyValueAttribute(issetor($_POST['userrole'])) .
-                        'required>
+                        <label for="userrole" class="form-label">* Role in hiring process</label>
+                        <select class="form-select" id="userrole" name="userrole" required>' .
+                            printAsOpts(getRoleOpts(), 'RoleID', 'Title') . 
+                        '</select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

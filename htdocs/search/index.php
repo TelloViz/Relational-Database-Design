@@ -1,6 +1,9 @@
 <?php 
+require_once('../base.php');
+$conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
 
-// replace with sql to fetch all posts
+require_once('postdisplay.php');
+
 $jsonposts = '{
     "Post1": {
         "PostID": 1,
@@ -19,11 +22,12 @@ $jsonposts = '{
 }';
 $posts = json_decode($jsonposts,true);
 
+function getAllPosts() {
 
-require_once('searchbase.php');
+}
+
 $bod = printPosts($posts);
 
-require_once('../base.php');
 
 $postview = [
     'title'=>'All Job Postings',

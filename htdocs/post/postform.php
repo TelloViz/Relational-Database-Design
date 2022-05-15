@@ -56,24 +56,6 @@ function getSalaryOpts() {
     }
 }
 
-function printOneOpt($val, $text) {
-    return '<option value="' . $val . '">' . $text . '</option>';
-}
-// this took more fanegaling than expected
-function printAsOpts($rows, $val_key, $text_key) {
-    $opts = "";
-    if (isset($rows[0])) {
-        return printOneOpt('', $rows[0]); //error message
-    }
-    else {
-        foreach ($rows[1] as $row) {
-            if (isset($row)) {
-                $opts = $opts . printOneOpt($row[$val_key], $row[$text_key]);
-            }
-        }
-        return $opts;
-    }
-}
 
 function printPostForm($P = [], $error = "") {
     // set up create employer form
