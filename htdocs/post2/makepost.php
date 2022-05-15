@@ -43,16 +43,39 @@ function makePost($P) {
         isset($P['post_edu']) &&
         isset($P['post_jobtype']))
     {
+        //validate FK constraints before trying to post
         [$eduerr, $eduid] = checkEducationID($P['post_edu']);
         [$jteerr, $jobtypeid] = checkJobTypeID($P['post_jobtype']);
         [$experr, $expreqid] = checkExpReqID($P['post_expreq']);
-        if ( isset($eduid) && isset($jobtypeid) && isset($expreqid)) {
+        [$deaderr, $deadformatted] = checkDeadlineFormat($P['post_dead']);
+        if ( isset($eduid) && isset($jobtypeid) && isset($expreqid) && isset($deadformatted)) {
             // Should try to actuall insert into post table now
-            return ['Would normally be success', NULL];
+            try {
+                $stmt = $GLOBALS['conn']->prepare("INSERT INTO JobPosts
+                    (EmployerID, EducationID, JobTypeID, ExpReqID ,
+                        SalaryMin, SalaryMax, Title, JobDesc, JobResp, JobQual,
+                        ContactEmail, ContactPhone, ContactMessage, Deadline)
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $stmt->bind_param('iiiiiisssssssi',
+                    $SESSION['employerid'], $eduid, $jobtypeid, $expreqid,
+                    $P['post_sal_min'], $P['post_sal_max'], $P['post_title'], $P['post_desc'], $P['post_resp'], $P['post_qual'],
+                    $P['post_cont_email'], $P['post_cont_phone'], $P['post_cont_msg'],$deadformatted);
+                $stmt->execute();
+                $jobpostid = $stmt->insert_id;
+                if (isset($jobpostid)) {
+                    return [NULL, $jobpostid];
+                }
+                else {
+                    return ['Failed to create job post. ' . $stmt->error, NULL];
+                }
+            }
+            catch (Exception $e) {
+                return ['Catch: Failed to create job post. ' . $e, NULL];
+            }
         }
-        else
+        else //couldn't validate foreign key constraints
         {
-            return [issetor($eduerr) . issetor($jterr) . issetor($experr), NULL];
+            return ['Error: ' . issetor($eduerr) . issetor($jterr) . issetor($experr) . issetor($deaderr) , NULL];
         }
     }
     else {
@@ -109,6 +132,12 @@ function checkJobTypeID($jobtypeid) {
     catch (Exception $e) {
         return ['Failed to find JobTypeID: ' . $jobtypeid . $e, NULL];
     }
+}
+
+function checkDeadlineFormat($deadline) {
+    // should use regex or something to see if in sql date format
+    // or, nicely receive any format and try to make into sql format, return as 'YYYY-MM-DD'
+    return [NULL, $deadline];
 }
 
 ?>
