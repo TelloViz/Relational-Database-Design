@@ -1,5 +1,4 @@
 <?php
-require_once('../base.php');
 
 function getEmployerPosts($employerid) {
     try {

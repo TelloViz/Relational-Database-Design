@@ -29,31 +29,28 @@ function printInitTableLink() {
 }
 
 function printHomepage() {
-  //$conn = new mysqli($servername, $username, $password, $database, $port);
-
-  $body = '<div class="container text-center">
-            <h4>Home Page</h4>
-            <p>Connected Successfully</p>
-          </div>';
-
   $inject = [
-    "body" => $body,
-    "title" => "Schemers Job Search"
+      'title' => 'All Job Posts',
+      'body' => ''
   ];
-
+  [$error, $posts] = getAllPosts();
+  if (isset($posts)) {
+      $inject['body'] = printPosts($posts);
+  }
+  else {
+      $inject['warning'] = 'Failed to fetch job posts. ' . $error;
+  }
   return $inject;
 }
 
-
-
-
 if (doesDBExist()) {
+  $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
+  require_once('posts/getposts.php');
   $inject = printHomepage();
 }
 else {
   $inject = printInitTableLink();
 }
-
 printMain($inject);
 
 ?>
