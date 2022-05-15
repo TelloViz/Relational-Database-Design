@@ -292,8 +292,9 @@ VALUES
 INSERT INTO JobPosts (EmployerID, EducationID, JobTypeID, ExpReqID, AddressID, SalaryID, Title, JobDesc, JobResp, JobQual, ContactEmail, Time_Stamp, DeadLine)
 VALUES
     (1, 4, 3, 2, 5, 3, "Cook", "Flipping Burgers and more", "Cooking, Cleaning, fast paced environment", "We'll take anyone", "hr@mcdonals.com", NOW(), "2022-05-18"),
-    (2, 5, 4, 3, 8, 2, "Greeter", "Checking receipts as customers leave the store", "Theft prevention, customer service", "Must be over 65 years old", "hiring@walmart.com", NOW(), "2022-06-8"),
-    (3, 5, 4, 3, 8, 2, "Greeter", "Checking receipts as customers leave the store", "Theft prevention, customer service", "Must be over 65 years old", "careers@costco.com", NOW(), "2022-06-20");
+    (2, 5, 4, 3, 6, 2, "Greeter", "Checking receipts as customers leave the store", "Theft prevention, customer service", "Must be over 65 years old", "hiring@walmart.com", NOW(), "2022-06-8"),
+    (3, 5, 4, 3, 7, 2, "Cashier", "Handle cash register", "Customer service, money handling", "Must be able to stand all day", "hiring@walmart.com", NOW(), "2022-06-20"),
+    (2, 5, 4, 3, 8, 2, "Greeter", "Checking receipts as customers leave the store", "Theft prevention, customer service", "Must be over 65 years old", "careers@costco.com", NOW(), "2022-06-8");
 
 INSERT INTO JobBenefits (BenefitID,JobPostID, Time_Stamp)
 VALUES

@@ -21,7 +21,7 @@ SELECT J.JobPostID, J.Title, J.JobDesc, J.DeadLine,
         A.ZipCodeID,
         Z.City, Z.StateID
         FROM JobPosts AS J
-INNER JOIN  Employers AS E ON J.JobPostID = E.EmployerID
+INNER JOIN  Employers AS E ON J.EmployerID = E.EmployerID
 INNER JOIN Addresses AS A ON E.AddressID = A.AddressID
 INNER JOIN ZipCodes AS Z ON A.ZipCodeID = Z.ZipCodeID
 ORDER BY J.Time_Stamp DESC;
@@ -33,7 +33,7 @@ SELECT J.JobPostID, J.Title, J.JobDesc, J.JobResp, J.JobQual, J.ContactEmail, J.
         A.StreetAddress, A.ZipCodeID,
         Z.City, Z.StateID
         FROM JobPosts AS J
-INNER JOIN  Employers AS E ON J.JobPostID = E.EmployerID
+INNER JOIN  Employers AS E ON J.EmployerID = E.EmployerID
 INNER JOIN Addresses AS A ON E.AddressID = A.AddressID
 INNER JOIN ZipCodes AS Z ON A.ZipCodeID = Z.ZipCodeID
 ORDER BY J.Time_Stamp DESC;
