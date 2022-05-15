@@ -289,10 +289,10 @@ VALUES
     (7, 1, 7, NOW()),
     (5, 2, 3, NOW());
 
-INSERT INTO JobPosts (EmployerID, EducationID, JobTypeID, ExpReqID, AddressID, SalaryID, Title, ContactEmail, Time_Stamp)
+INSERT INTO JobPosts (EmployerID, EducationID, JobTypeID, ExpReqID, AddressID, SalaryID, Title, ContactEmail, Time_Stamp, DeadLine)
 VALUES
-    (1, 4, 3, 2, 5, 3, "Burger Flip Specialist", "burgermeistermeisterburger@juno.com", NOW()),
-    (2, 5, 4, 3, 8, 2, "Walmart Receipt Highlighter Security Personnel", "NeonStreaks@savemoney.com", NOW());
+    (1, 4, 3, 2, 5, 3, "Burger Flip Specialist", "burgermeistermeisterburger@juno.com", NOW(), "2022-05-18"),
+    (2, 5, 4, 3, 8, 2, "Walmart Receipt Highlighter Security Personnel", "NeonStreaks@savemoney.com", NOW(), "2022-06-8");
 
 INSERT INTO JobBenefits (BenefitID,JobPostID, Time_Stamp)
 VALUES

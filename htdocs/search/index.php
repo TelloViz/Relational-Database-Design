@@ -11,7 +11,7 @@ $inject = [
 
 function getAllPosts() {
     try {
-        $result = $GLOBALS['conn']->query("SELECT * FROM JobPosts LIMIT 50");
+        $result = $GLOBALS['conn']->query("SELECT * FROM PostPreviewView LIMIT 50");
         $jobposts = $result->fetch_all(MYSQLI_ASSOC);
         if (isset($jobposts)) {
             return [NULL, $jobposts];
