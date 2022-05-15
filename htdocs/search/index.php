@@ -4,35 +4,33 @@ $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['passw
 
 require_once('postdisplay.php');
 
-$jsonposts = '{
-    "Post1": {
-        "PostID": 1,
-        "Title": "Software Engineer III",
-        "EmployerName": "Netflix",
-        "StateID": "CA",
-        "City": "Monrovia"
-    },
-    "Post2": {
-        "PostID": 2,
-        "Title": "Data Analyst",
-        "EmployerName": "Google",
-        "StateID": "CA",
-        "City": "San Jose"
-    }
-}';
-$posts = json_decode($jsonposts,true);
+$inject = [
+    'title' => 'All Job Posts',
+    'body' => ''
+];
 
 function getAllPosts() {
-
+    try {
+        $result = $GLOBALS['conn']->query("SELECT * FROM JobPosts LIMIT 50");
+        $jobposts = $result->fetch_all(MYSQLI_ASSOC);
+        if (isset($jobposts)) {
+            return [NULL, $jobposts];
+        }
+        return ['Failed to find JobPosts.', NULL];
+    }
+    catch (Exception $e) {
+        return ['Failed to find JobPosts. ' . $e, NULL];
+    }
 }
 
-$bod = printPosts($posts);
+[$error, $posts] = getAllPosts();
+if (isset($posts)) {
+    $inject['body'] = printPosts($posts);
+}
+else {
+    $inject['warning'] = 'Failed to fetch job posts. ' . $error;
+}
 
-
-$postview = [
-    'title'=>'All Job Postings',
-    'body'=> $bod
-];
-printMain($postview);
+printMain($inject);
 
 ?>
