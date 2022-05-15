@@ -35,25 +35,25 @@ $port = 3306;
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="/cs32/auth/register.php">Register</a>
+              <a class="nav-link" href="/cs332/auth/register.php">Register</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/cs32/auth/login.php">Log In</a>
+              <a class="nav-link" href="/cs332/auth/login.php">Log In</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/cs32/auth/logout.php">Logout</a>
+              <a class="nav-link" href="/cs332/auth/logout.php">Logout</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/cs32/employer/employercreate.php">Create Employer</a>
+              <a class="nav-link" href="/cs332/employer/employercreate.php">Create Employer</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/cs32/post/createpost.php">Create Job Posting</a>
+              <a class="nav-link" href="/cs332/post/createpost.php">Create Job Posting</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/cs32/search/">All Posts</a>
+              <a class="nav-link" href="/cs332/search/">All Posts</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/cs32/init.php">Reset DB</a>
+              <a class="nav-link" href="/cs332/init.php">Reset DB</a>
             </li>
             <!--
             <li class="nav-item dropdown">
