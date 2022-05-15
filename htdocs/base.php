@@ -105,7 +105,7 @@ function printMain($inject) {
           //employeelinks() . 
           employerlinks() . 
             '<li class="nav-item">
-              <a class="nav-link" href="/cs332/search/">All Posts</a>
+              <a class="nav-link" href="/cs332/posts/">All Posts</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/cs332/init.php">Reset DB</a>
