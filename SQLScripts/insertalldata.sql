@@ -161,8 +161,7 @@ INSERT INTO Addresses(ZipCodeID,Time_Stamp,StreetAddress) VALUES
 
 INSERT INTO AppStatus(Title,Time_Stamp)
 VALUES
-(
-    "Processing", NOW()),
+    ("Processing", NOW()),
     ("Approved", NOW()),
     ("Rejected", NOW()),
     ("Final Review", NOW());
@@ -222,52 +221,34 @@ VALUES
     (1, NOW()),
     (3, NOW()),
     (5, NOW()),
-    (4, NOW()),
-    (3, NOW()),
-    (1, NOW()),
-    (2, NOW()),
-    (3, NOW()),
-    (5, NOW()),
-    (3, NOW()),
-    (5, NOW()),
-    (4, NOW()),
-    (3, NOW()),
-    (1, NOW()),
-    (2, NOW()),
-    (3, NOW()),
-    (5, NOW()),
-    (3, NOW()),
-    (5, NOW()),
-    (3, NOW()),
-    (5, NOW()),
-    (4, NOW()),
-    (3, NOW()),
-    (3, NOW()),
-    (1, NOW());
+    (4, NOW());
 
 INSERT INTO UserAccount(Email, EmployeeID, FirstName, LastName, Phone, Password, Time_Stamp)
     VALUES
     ('dirce0@newsvine.com', NULL, 'Darin', 'Irce', '126-328-4062', 'jm8q2hDXp', NOW()),
     ('tmulholland1@qq.com', NULL, 'Trent', 'Mulholland', '769-861-4553', '7pV7ew73oz', NOW()),
     ('gdebiasi2@statcounter.com', NULL, 'Gardie', 'De Biasi', '457-727-6737', 'g2dssSarz', NOW()),
-    ('kwarkup3@t.co', 8, 'Kalindi', 'Warkup', '948-342-5010', 'NuTGs3aDod', NOW()),
-    ('gmargarson8@weather.com', 9, 'Gwenneth', 'Margarson', '918-585-1562', '9856r4fEGS', NOW()),
-    ('econre9@deviantart.com', 10, 'Erda', 'Conre', '239-317-1782', 'J1eS31G6w', NOW()),
-    ('kseillera@ca.gov', 11, 'Karla', 'Seiller', '442-879-7365', 'LD56v7', NOW()),
-    ('sbirkbeckb@issuu.com', 12, 'Shannon', 'Birkbeck', '179-558-8136', 'jOuXZmROv60', NOW()),
-    ('dludgatec@vkontakte.ru', 13, 'Dela', 'Ludgate', '433-657-8608', 'xjXrocN6U1E', NOW()),
-    ('ininnottid@sphinn.com', 14, 'Ingra', 'Ninnotti', '863-475-7547', 'nlUenl', NOW()),
-    ('dvicke@homestead.com', 15, 'Doti', 'Vick', '639-681-5821', 'GYobGeTz', NOW()),
-    ('mtidcombf@home.pl', 16, 'Myrah', 'Tidcomb', '897-243-6264', 'sKQ7pz3', NOW()),
-    ('ewickersleyg@dell.com', 17, 'Ermengarde', 'Wickersley', '586-761-9950', 'IMuROnjTc', NOW()),
-    ('nthomkeh@woothemes.com', 18, 'Nedi', 'Thomke', '592-659-5056', '2wUnlf', NOW()),
-    ('barnaudeti@stumbleupon.com', 19, 'Bernette', 'Arnaudet', '158-735-0646', 'emziQOIb', NOW()),
-    ('sgaskallj@trellian.com', 20, 'Sharona', 'Gaskall', '402-952-8512', 's8rAqwb', NOW()),
-    ('gellerk@google.co.jp', 21, 'Gael', 'Eller', '407-254-0551', 'nciAZKL', NOW()),
-    ('dguyonnetl@examiner.com', 22, 'Dorotea', 'Guyonnet', '184-715-6183', 'tEASYZyUptJo', NOW()),
-    ('jschulkenm@springer.com', 23, 'Jermayne', 'Schulken', '428-623-0534', 'EmM0jl', NOW()),
-    ('twattsn@1und1.de', 24, 'Thorndike', 'Watts', '538-420-8182', 'g7dZSR', NOW()),
-    ('lvaneschio@printfriendly.com', 25, 'Loy', 'Vaneschi', '800-110-0185', 'pQJDgWsdjk', NOW());
+    ('kwarkup3@t.co', 1, 'Kalindi', 'Warkup', '948-342-5010', 'NuTGs3aDod', NOW()),
+    ('gmargarson8@weather.com', 2, 'Gwenneth', 'Margarson', '918-585-1562', '9856r4fEGS', NOW()),
+    ('econre9@deviantart.com', 3, 'Erda', 'Conre', '239-317-1782', 'J1eS31G6w', NOW()),
+    ('kseillera@ca.gov', 4, 'Karla', 'Seiller', '442-879-7365', 'LD56v7', NOW());
+
+INSERT INTO UserAccount(Email, EmployeeID, FirstName, LastName, Phone, Password, Time_Stamp)
+    VALUES
+    ('sbirkbeckb@issuu.com', NULL, 'Shannon', 'Birkbeck', '179-558-8136', 'jOuXZmROv60', NOW()),
+    ('dludgatec@vkontakte.ru', NULL, 'Dela', 'Ludgate', '433-657-8608', 'xjXrocN6U1E', NOW()),
+    ('ininnottid@sphinn.com', NULL, 'Ingra', 'Ninnotti', '863-475-7547', 'nlUenl', NOW()),
+    ('dvicke@homestead.com', NULL, 'Doti', 'Vick', '639-681-5821', 'GYobGeTz', NOW()),
+    ('mtidcombf@home.pl', NULL, 'Myrah', 'Tidcomb', '897-243-6264', 'sKQ7pz3', NOW()),
+    ('ewickersleyg@dell.com', NULL, 'Ermengarde', 'Wickersley', '586-761-9950', 'IMuROnjTc', NOW()),
+    ('nthomkeh@woothemes.com', NULL, 'Nedi', 'Thomke', '592-659-5056', '2wUnlf', NOW()),
+    ('barnaudeti@stumbleupon.com', NULL, 'Bernette', 'Arnaudet', '158-735-0646', 'emziQOIb', NOW()),
+    ('sgaskallj@trellian.com', NULL, 'Sharona', 'Gaskall', '402-952-8512', 's8rAqwb', NOW()),
+    ('gellerk@google.co.jp', NULL, 'Gael', 'Eller', '407-254-0551', 'nciAZKL', NOW()),
+    ('dguyonnetl@examiner.com', NULL, 'Dorotea', 'Guyonnet', '184-715-6183', 'tEASYZyUptJo', NOW()),
+    ('jschulkenm@springer.com', NULL, 'Jermayne', 'Schulken', '428-623-0534', 'EmM0jl', NOW()),
+    ('twattsn@1und1.de', NULL, 'Thorndike', 'Watts', '538-420-8182', 'g7dZSR', NOW()),
+    ('lvaneschio@printfriendly.com', NULL, 'Loy', 'Vaneschi', '800-110-0185', 'pQJDgWsdjk', NOW());
 
 INSERT INTO Employers (AddressID, EmployerName, Email, Phone, Time_Stamp)
 VALUES
@@ -298,6 +279,11 @@ VALUES
     (3, 5, 4, 3, 7, 2, "Cashier", "Handle cash register", "Customer service, money handling", "Must be able to stand all day", "hiring@walmart.com", NOW(), "2022-06-20"),
     (3, 5, 4, 3, 8, 2, "Cashier", "Handle cash register", "Customer service, money handling", "Must be able to stand all day", "hiring@walmart.com", NOW(), "2022-06-10"),
     (2, 5, 4, 3, 9, 2, "Greeter", "Checking receipts as customers leave the store", "Theft prevention, customer service", "Must be over 65 years old", "careers@costco.com", NOW(), "2022-06-8");
+
+INSERT INTO AppliedPosts (EmployeeID, JobPostID, AppStatusID) VALUES
+            (1, 1, 1),
+            (2, 1, 2),
+            (3, 1, 3);
 
 INSERT INTO JobBenefits (BenefitID,JobPostID, Time_Stamp)
 VALUES

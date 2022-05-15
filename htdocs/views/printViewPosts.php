@@ -10,11 +10,11 @@ function printAllFields($post) {
 }
 
 function printViewPosts($posts) {
-    $vp = '<div class="container">';
+    $vp = '<div class="container"><div class="row row-cols-3 p-4 m-4">';
     foreach ($posts as $post) {
-        $vp = $vp . '<div class="row row-cols-4"><div class="col border">' . printAllFields($post) . '</div></div>';
+        $vp = $vp . '<div class="col border">' . printAllFields($post) . '</div>';
     }
-    $vp = $vp . '</div>';
+    $vp = $vp . '</div></div>';
     return $vp;
 }
 
