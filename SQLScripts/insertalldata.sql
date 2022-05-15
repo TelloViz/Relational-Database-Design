@@ -159,16 +159,16 @@ INSERT INTO Addresses(ZipCodeID,Time_Stamp,StreetAddress) VALUES
 ,(92704,NOW(),'12376 5th St')
 ,(92806,NOW(),'1239 Ashby Ave');
 
-INSERT INTO AppStatus(Title,Time_Stamp) 
-VALUES 
+INSERT INTO AppStatus(Title,Time_Stamp)
+VALUES
 (
     "Processing", NOW()),
     ("Approved", NOW()),
     ("Rejected", NOW()),
     ("Final Review", NOW());
 
-INSERT INTO Education(Title,Time_Stamp) 
-VALUES 
+INSERT INTO Education(Title,Time_Stamp)
+VALUES
     ("No Education Required", NOW()),
     ("High School Degree", NOW()),
     ("Associate's Degree", NOW()),
@@ -176,9 +176,16 @@ VALUES
     ("Master's Degree", NOW()),
     ("Doctoral Degree", NOW());
 
+INSERT INTO Salary(Title)
+VALUES
+    ("$35,000+");
+    ("$40,000+");
+    ("$50,000+");
+    ("$70,000+");
+    ("$100,000+");
 
-INSERT INTO Roles(Title,Time_Stamp) 
-VALUES 
+INSERT INTO Roles(Title,Time_Stamp)
+VALUES
     ("Owner", NOW()),
     ("CEO", NOW()),
     ("Assistant/Manager", NOW()),
@@ -187,8 +194,8 @@ VALUES
     ("Recruiter", NOW()),
     ("Other", NOW());
 
-INSERT INTO Benefits(Title,Time_Stamp) 
-VALUES 
+INSERT INTO Benefits(Title,Time_Stamp)
+VALUES
     ("Health Insurance", NOW()),
     ("Vision Insurance", NOW()),
     ("Dental Insurance", NOW()),
@@ -196,8 +203,8 @@ VALUES
     ("Pension", NOW()),
     ("401k", NOW());
 
-INSERT INTO ExpReq(Title,Time_Stamp) 
-VALUES 
+INSERT INTO ExpReq(Title,Time_Stamp)
+VALUES
     ("Entry level", NOW()),
     ("Mid-Level", NOW()),
     ("Senior Level", NOW());
@@ -262,8 +269,8 @@ INSERT INTO UserAccount(Email, EmployeeID, FirstName, LastName, Phone, Password,
     ('twattsn@1und1.de', 24, 'Thorndike', 'Watts', '538-420-8182', 'g7dZSR', NOW()),
     ('lvaneschio@printfriendly.com', 25, 'Loy', 'Vaneschi', '800-110-0185', 'pQJDgWsdjk', NOW());
 
-INSERT INTO Employers (AddressID, EmployerName, Email, Phone, Time_Stamp) 
-VALUES 
+INSERT INTO Employers (AddressID, EmployerName, Email, Phone, Time_Stamp)
+VALUES
     (1, 'Maurie Niave', 'mniave0@163.com', '192-402-5479', NOW()),
     (2, 'Conway Ivery', 'civery1@nasa.gov', '476-253-5088', NOW()),
     (3, 'Yulma Asel', 'yasel2@artisteer.com', '852-726-8127', NOW()),
@@ -295,4 +302,3 @@ VALUES
     (4,2, NOW()),
     (5,2, NOW()),
     (6,2, NOW());
-    
