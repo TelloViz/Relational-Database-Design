@@ -178,10 +178,10 @@ VALUES
 
 INSERT INTO Salary(Title)
 VALUES
-    ("$35,000+");
-    ("$40,000+");
-    ("$50,000+");
-    ("$70,000+");
+    ("$35,000+"),
+    ("$40,000+"),
+    ("$50,000+"),
+    ("$70,000+"),
     ("$100,000+");
 
 INSERT INTO Roles(Title,Time_Stamp)
@@ -289,10 +289,10 @@ VALUES
     (7, 1, 7, NOW()),
     (5, 2, 3, NOW());
 
-INSERT INTO JobPosts (EmployerID, EducationID, JobTypeID, ExpReqID, AddressID, SalaryMin, SalaryMax, Title, ContactEmail, Time_Stamp)
+INSERT INTO JobPosts (EmployerID, EducationID, JobTypeID, ExpReqID, AddressID, SalaryID, Title, ContactEmail, Time_Stamp)
 VALUES
-    (1, 4, 3, 2, 5, 15000, 18000, "Burger Flip Specialist", "burgermeistermeisterburger@juno.com", NOW()),
-    (2, 5, 4, 3, 8, 80000, 180000, "Walmart Receipt Highlighter Security Personnel", "NeonStreaks@savemoney.com", NOW());
+    (1, 4, 3, 2, 5, 3, "Burger Flip Specialist", "burgermeistermeisterburger@juno.com", NOW()),
+    (2, 5, 4, 3, 8, 2, "Walmart Receipt Highlighter Security Personnel", "NeonStreaks@savemoney.com", NOW());
 
 INSERT INTO JobBenefits (BenefitID,JobPostID, Time_Stamp)
 VALUES
