@@ -4,7 +4,6 @@
 USE schemers;
 
 DROP VIEW IF EXISTS EmployerDetailView;
-
 CREATE VIEW EmployerDetailView AS
 SELECT E.EmployerName, E.Email, E.Phone, Z.City, Z.StateID, E.employerID
 FROM employers AS E 
@@ -13,8 +12,7 @@ INNER JOIN ZipCodes AS Z ON A.ZipCodeID = Z.ZipCodeID
 ORDER BY E.Time_Stamp DESC;
 
 
-DROP VIEW IF EXISTS PostDetailView;
-
+DROP VIEW IF EXISTS PostPreviewView;
 CREATE VIEW PostPreviewView AS
 SELECT J.JobPostID, J.Title, J.JobDesc, J.DeadLine,
         E.EmployerID, E.EmployerName,
@@ -27,6 +25,7 @@ INNER JOIN ZipCodes AS Z ON A.ZipCodeID = Z.ZipCodeID
 ORDER BY J.Time_Stamp DESC;
 
 
+DROP VIEW IF EXISTS PostDetailView;
 CREATE VIEW PostDetailView AS
 SELECT J.JobPostID, J.Title, J.JobDesc, J.JobResp, J.JobQual, J.ContactEmail, J.DeadLine,
         E.EmployerID, E.EmployerName,
@@ -37,3 +36,17 @@ INNER JOIN  Employers AS E ON J.EmployerID = E.EmployerID
 INNER JOIN Addresses AS A ON E.AddressID = A.AddressID
 INNER JOIN ZipCodes AS Z ON A.ZipCodeID = Z.ZipCodeID
 ORDER BY J.Time_Stamp DESC;
+
+
+DROP VIEW IF EXISTS EmployerGT3PostsView;
+CREATE VIEW EmployerGT3PostsView AS
+SELECT E.EmployerID, E.EmployerName, E.Email AS EmployerEmail,
+        U.FirstName, U.LastName, U.Email AS UserEmail,
+        COUNT(J.JobPostID) AS JobsPosted
+        FROM Employers AS E 
+INNER JOIN EmployerAdmin AS EA ON EA.EmployerID = E.EmployerID
+INNER JOIN UserAccount AS U ON EA.UserID = U.UserID
+INNER JOIN JobPosts AS J ON E.EmployerID = J.EmployerID
+GROUP BY E.EmployerID
+HAVING COUNT(J.JobPostID) >= 3 
+ORDER BY E.Time_Stamp DESC;
