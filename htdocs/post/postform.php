@@ -76,21 +76,21 @@ function printPostForm($P = [], $error = "") {
                     </div>
                     <div class="mb-3">
                         <label for="post_desc" class="form-label">Job Description</label>
-                        <input type="text" class="form-control" id="post_desc" name="post_desc"' .
+                        <textarea class="form-control" id="post_desc" name="post_desc" rows="4" cols="50">' .
                             ifNotEmptyValueAttribute(issetor($P['post_desc'])) .
-                        '>
+                        '</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="post_qual" class="form-label">Qualifications</label>
-                        <input type="text" class="form-control" id="post_qual" name="post_qual"' .
+                        <textarea class="form-control" id="post_qual" name="post_qual" rows="4" cols="50">' .
                             ifNotEmptyValueAttribute(issetor($P['post_qual'])) .
-                        '>
+                        '</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="post_resp" class="form-label">Responsiblities</label>
-                        <input type="textbody" class="form-control" id="post_resp" name="post_resp"' .
+                        <textarea class="form-control" id="Qual" name="Qual" rows="4" cols="50">' .
                             ifNotEmptyValueAttribute(issetor($P['post_resp'])) .
-                        '>
+                        '</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="post_edu" class="form-label">* Education</label>

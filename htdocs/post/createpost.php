@@ -14,9 +14,9 @@ if(!isset($_SESSION['userid'])) {
 }
 // otherwise, user is registered & logged in
 // create employer
-else if ( isset($_SESSION['employerid']) ) {
-    header('Refresh: 2;url=/cs332/employer/?employerid=' . $_SESSION['employerid']);
-    $inject['body'] = '<div class="container"><p class="alert-danger">Already an Employer. Redirecting...</p><a href="/cs332/employer/?employerid=' . $_SESSION['employerid'] . '">Click Here if you dont redirect automatically</a></div>';
+else if (!isset($_SESSION['employerid']) ) {
+    header('Refresh: 2;url=/cs332/employer/create.php');
+    $inject['body'] = '<div class="container"><p class="alert-danger">Must be an Employer. Redirecting...</p><a href="/cs332/employer/create.php">Click Here if you dont redirect automatically</a></div>';
 }
 else {
     if(!empty($_POST['employername'])
