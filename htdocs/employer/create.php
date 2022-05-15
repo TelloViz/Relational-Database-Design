@@ -94,6 +94,7 @@ function makeEmployer($employername, $email, $phonenumber, $streetaddress, $city
     [$error, $userupdated] = userAddEmployer($userinfo); 
     if (!$error) {
         $_SESSION['employerid'] = $employerid;
+        $_SESSION['employeremail'] = $email;
         return [NULL , TRUE];
     }
 

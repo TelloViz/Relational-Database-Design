@@ -39,7 +39,7 @@ function makePost($P) {
         isset($P['post_qual']) &&  
         isset($P['post_expreq']) &&  
         isset($P['post_resp']) &&  
-        isset($P['post_sal_min']) &&
+        isset($P['post_sal']) &&
         isset($P['post_edu']) &&
         isset($P['post_jobtype']))
     {
@@ -51,15 +51,17 @@ function makePost($P) {
         if ( isset($eduid) && isset($jobtypeid) && isset($expreqid) && isset($deadformatted)) {
             // Should try to actuall insert into post table now
             try {
+                $email = (isset($P['post_cont_email'])) ? ($P['post_cont_email']) : ($_SESSION['employeremail']);
+
                 $stmt = $GLOBALS['conn']->prepare("INSERT INTO JobPosts
                     (EmployerID, EducationID, JobTypeID, ExpReqID ,
-                        SalaryMin, SalaryMax, Title, JobDesc, JobResp, JobQual,
+                        SalaryID, Title, JobDesc, JobResp, JobQual,
                         ContactEmail, ContactPhone, ContactMessage, Deadline)
-                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                $stmt->bind_param('iiiiiisssssssi',
-                    $SESSION['employerid'], $eduid, $jobtypeid, $expreqid,
-                    $P['post_sal_min'], $P['post_sal_max'], $P['post_title'], $P['post_desc'], $P['post_resp'], $P['post_qual'],
-                    $P['post_cont_email'], $P['post_cont_phone'], $P['post_cont_msg'],$deadformatted);
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $stmt->bind_param('iiiiisssssssi',
+                    $_SESSION['employerid'], $eduid, $jobtypeid, $expreqid,
+                    $P['post_sal'], $P['post_title'], $P['post_desc'], $P['post_resp'], $P['post_qual'],
+                    $email, $P['post_cont_phone'], $P['post_cont_msg'],$deadformatted);
                 $stmt->execute();
                 $jobpostid = $stmt->insert_id;
                 if (isset($jobpostid)) {

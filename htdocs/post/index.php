@@ -25,7 +25,7 @@ if (isset($_GET['postid'])) {
     }
 }
 // if post attempted: try to post and display result, if fail print form with errors
-else if (isset($_POST)) {
+else if (!empty($_POST)) {
     [$error, $postid] = makePost($_POST);
     if (isset($postid)) {
         header('Refresh: 2;url=/cs332/post/?postid=' . $postid);

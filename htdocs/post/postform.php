@@ -90,19 +90,19 @@ function printPostForm($P = [], $error = "") {
                     <div class="mb-3">
                         <label for="post_desc" class="form-label">Job Description</label>
                         <textarea class="form-control" id="post_desc" name="post_desc" rows="4" cols="50">' .
-                            ifNotEmptyValueAttribute(issetor($P['post_desc'])) .
+                            issetor($P['post_desc']) .
                         '</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="post_qual" class="form-label">Qualifications</label>
                         <textarea class="form-control" id="post_qual" name="post_qual" rows="4" cols="50">' .
-                            ifNotEmptyValueAttribute(issetor($P['post_qual'])) .
+                            issetor($P['post_qual']) .
                         '</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="post_resp" class="form-label">Responsiblities</label>
-                        <textarea class="form-control" id="Qual" name="Qual" rows="4" cols="50">' .
-                            ifNotEmptyValueAttribute(issetor($P['post_resp'])) .
+                        <textarea class="form-control" id="post_resp" name="post_resp" rows="4" cols="50">' .
+                            issetor($P['post_resp']) .
                         '</textarea>
                     </div>
                     <div class="mb-3">
@@ -133,11 +133,18 @@ function printPostForm($P = [], $error = "") {
                         '</select>
                     </div>
                     <div class="mb-3">
+                        <label for="post_cont_email" class="form-label">* Contact Email</label>
+                        <input type="text" class="form-control" id="post_cont_email" name="post_cont_email"' .
+                            ifNotEmptyValueAttribute((isset($P['post_cont_email'])) ? ($P['post_cont_email']) : ($_SESSION['employeremail'])) .
+                        'required>
+                    </div>
+                    <div class="mb-3">
                         <label for="post_dead" class="form-label">* Deadline</label>
                         <input type="date" class="form-control" id="post_dead" name="post_dead" placeholder="YYYY-MM-DD"' .
                             ifNotEmptyValueAttribute(issetor($P['post_dead'])) .
                         'required>
                     </div>
+
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div> ';
