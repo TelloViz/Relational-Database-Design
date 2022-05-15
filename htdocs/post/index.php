@@ -24,6 +24,14 @@ if (isset($_GET['postid'])) {
         ];
     }
 }
+else if(!isset($_SESSION['userid'])) {
+    header('Refresh: 2;url=/cs332/auth/login.php');
+    $inject['body'] = '<div class="container"><p class="alert-danger">Must Be Logged in. Redirecting...</p><a href="/cs332/auth/login.php">Click Here if you dont redirect automatically</a></div>';
+}
+else if (!isset($_SESSION['employerid']) ) {
+    header('Refresh: 2;url=/cs332/employer/create.php');
+    $inject['body'] = '<div class="container"><p class="alert-danger">Must be an Employer. Redirecting...</p><a href="/cs332/employer/create.php">Click Here if you dont redirect automatically</a></div>';
+}
 // if post attempted: try to post and display result, if fail print form with errors
 else if (!empty($_POST)) {
     [$error, $postid] = makePost($_POST);
