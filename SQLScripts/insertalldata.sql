@@ -271,9 +271,9 @@ INSERT INTO UserAccount(Email, EmployeeID, FirstName, LastName, Phone, Password,
 
 INSERT INTO Employers (AddressID, EmployerName, Email, Phone, Time_Stamp)
 VALUES
-    (1, 'Maurie Niave', 'mniave0@163.com', '192-402-5479', NOW()),
-    (2, 'Conway Ivery', 'civery1@nasa.gov', '476-253-5088', NOW()),
-    (3, 'Yulma Asel', 'yasel2@artisteer.com', '852-726-8127', NOW()),
+    (1, 'McDonalds', 'hr@mcdonalds.com', '192-402-5479', NOW()),
+    (2, 'Walmart', 'hiring@walmart.com', '476-253-5088', NOW()),
+    (3, 'Costco', 'careers@costco.com', '852-726-8127', NOW()),
     (4, 'Mill Wink', 'mwink3@msn.com', '295-895-4986', NOW()),
     (5, 'Gibb Kerin', 'gkerin4@comcast.net', '640-476-4882', NOW()),
     (6, 'Ali Shepton', 'ashepton5@networkadvertising.org', '577-297-2767', NOW()),
@@ -289,10 +289,11 @@ VALUES
     (7, 1, 7, NOW()),
     (5, 2, 3, NOW());
 
-INSERT INTO JobPosts (EmployerID, EducationID, JobTypeID, ExpReqID, AddressID, SalaryID, Title, ContactEmail, Time_Stamp, DeadLine)
+INSERT INTO JobPosts (EmployerID, EducationID, JobTypeID, ExpReqID, AddressID, SalaryID, Title, JobDesc, JobResp, JobQual, ContactEmail, Time_Stamp, DeadLine)
 VALUES
-    (1, 4, 3, 2, 5, 3, "Burger Flip Specialist", "burgermeistermeisterburger@juno.com", NOW(), "2022-05-18"),
-    (2, 5, 4, 3, 8, 2, "Walmart Receipt Highlighter Security Personnel", "NeonStreaks@savemoney.com", NOW(), "2022-06-8");
+    (1, 4, 3, 2, 5, 3, "Cook", "Flipping Burgers and more", "Cooking, Cleaning, fast paced environment", "We'll take anyone", "hr@mcdonals.com", NOW(), "2022-05-18"),
+    (2, 5, 4, 3, 8, 2, "Greeter", "Checking receipts as customers leave the store", "Theft prevention, customer service", "Must be over 65 years old", "hiring@walmart.com", NOW(), "2022-06-8"),
+    (3, 5, 4, 3, 8, 2, "Greeter", "Checking receipts as customers leave the store", "Theft prevention, customer service", "Must be over 65 years old", "careers@costco.com", NOW(), "2022-06-20");
 
 INSERT INTO JobBenefits (BenefitID,JobPostID, Time_Stamp)
 VALUES
