@@ -49,10 +49,15 @@ function ifNotEmptyValueAttribute($value) {
 
 // these two functions are used to fill a <select> using the result of a fetch_all from mysqli.
 // the $rows input to printAsOpts is in the form [$error, $kvrows], hence the $rows[1]
-function printOneOpt($val, $text) {
-    return '<option value="' . $val . '">' . $text . '</option>';
+function printOneOpt($val, $text, $isactive=FALSE) {
+  $actstr = "";
+  if ($isactive) {
+    $actstr = " selected ";
+  }
+  return '<option' . $actstr . ' value="' . $val . '">' . $text . '</option>';
 }
-function printAsOpts($rows, $val_key, $text_key) {
+
+function printAsOpts($rows, $val_key, $text_key, $default="") {
     $opts = "";
     if (isset($rows[0])) {
         return printOneOpt('', $rows[0]); //error message
@@ -60,7 +65,7 @@ function printAsOpts($rows, $val_key, $text_key) {
     else {
         foreach ($rows[1] as $row) {
             if (isset($row)) {
-                $opts = $opts . printOneOpt($row[$val_key], $row[$text_key]);
+                $opts = $opts . printOneOpt($row[$val_key], $row[$text_key], $row[$val_key]==$default);
             }
         }
         return $opts;

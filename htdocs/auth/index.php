@@ -12,8 +12,8 @@ $inject = [
 
 if (isset($_SESSION['userid'])) {
     $warning = '<span>Already logged in as: ' . $_SESSION['userid'] 
-    . ', redirecting...<a href="/cs332">Click Here if you dont redirect automatically</a></span>';
-    $inject['redirect'] = '/cs332';
+    . ', redirecting to profile...<a href="account.php">Click Here if you dont redirect automatically</a></span>';
+    $inject['redirect'] = 'account.php';
 }
 else {
     $loginform = loginUserPage();
