@@ -42,25 +42,20 @@ function getJobTypeOpts() {
     }
 }
 
-
-function printOneOpt($val, $text) {
-    return '<option value="' . $val . '">' . $text . '</option>';
-}
-// this took more fanegaling than expected
-function printAsOpts($rows, $val_key, $text_key) {
-    $opts = "";
-    if (isset($rows[0])) {
-        return printOneOpt('', $rows[0]); //error message
-    }
-    else {
-        foreach ($rows[1] as $row) {
-            if (isset($row)) {
-                $opts = $opts . printOneOpt($row[$val_key], $row[$text_key]);
-            }
+function getSalaryOpts() {
+    try {
+        $result = $GLOBALS['conn']->query("SELECT SalaryID, Title FROM Salary");
+        $salaries = $result->fetch_all(MYSQLI_ASSOC);
+        if (isset($salaries)) {
+            return [NULL, $salaries];
         }
-        return $opts;
+        return ['Failed to find Salary levels.', NULL];
+    }
+    catch (Exception $e) {
+        return ['Failed to find Salary levels. ' . $e, NULL];
     }
 }
+
 
 function printPostForm($P = [], $error = "") {
     // set up create employer form
@@ -76,21 +71,21 @@ function printPostForm($P = [], $error = "") {
                     </div>
                     <div class="mb-3">
                         <label for="post_desc" class="form-label">Job Description</label>
-                        <input type="text" class="form-control" id="post_desc" name="post_desc"' .
-                            ifNotEmptyValueAttribute(issetor($P['post_desc'])) .
-                        '>
+                        <textarea class="form-control" id="post_desc" name="post_desc" rows="4" cols="50">' .
+                            issetor($P['post_desc']) .
+                        '</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="post_qual" class="form-label">Qualifications</label>
-                        <input type="text" class="form-control" id="post_qual" name="post_qual"' .
-                            ifNotEmptyValueAttribute(issetor($P['post_qual'])) .
-                        '>
+                        <textarea class="form-control" id="post_qual" name="post_qual" rows="4" cols="50">' .
+                            issetor($P['post_qual']) .
+                        '</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="post_resp" class="form-label">Responsiblities</label>
-                        <input type="textbody" class="form-control" id="post_resp" name="post_resp"' .
-                            ifNotEmptyValueAttribute(issetor($P['post_resp'])) .
-                        '>
+                        <textarea class="form-control" id="post_resp" name="post_resp" rows="4" cols="50">' .
+                            issetor($P['post_resp']) .
+                        '</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="post_edu" class="form-label">* Education</label>
@@ -114,21 +109,24 @@ function printPostForm($P = [], $error = "") {
                     </div>
                     <div class="mb-3">
                         <h6>Salary</h6>
-                        <label for="post_sal_min" class="form-label">* Min</label>
-                        <input type="number" class="form-control" id="post_sal_min" name="post_sal_min"' .
-                            ifNotEmptyValueAttribute(issetor($P['post_sal_min'])) .
+                        <label for="post_sal" class="form-label">* Salary Range</label>
+                        <select class="form-select" id="post_sal" name="post_sal" required>' .
+                            printAsOpts(getSalaryOpts(), 'SalaryID', 'Title') . 
+                        '</select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="post_cont_email" class="form-label">* Contact Email</label>
+                        <input type="text" class="form-control" id="post_cont_email" name="post_cont_email"' .
+                            ifNotEmptyValueAttribute((isset($P['post_cont_email'])) ? ($P['post_cont_email']) : ($_SESSION['employeremail'])) .
                         'required>
-                        <label for="post_sal_max" class="form-label">Max</label>
-                        <input type="number" class="form-control" id="post_sal_max" name="post_sal_max"' .
-                            ifNotEmptyValueAttribute(issetor($P['post_sal_max'])) .
-                        '>
                     </div>
                     <div class="mb-3">
                         <label for="post_dead" class="form-label">* Deadline</label>
-                        <input type="text" class="form-control" id="post_dead" name="post_dead" placeholder="YYYY-MM-DD"' .
+                        <input type="date" class="form-control" id="post_dead" name="post_dead" placeholder="YYYY-MM-DD"' .
                             ifNotEmptyValueAttribute(issetor($P['post_dead'])) .
                         'required>
                     </div>
+
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div> ';

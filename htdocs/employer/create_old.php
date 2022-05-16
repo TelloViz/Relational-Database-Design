@@ -25,40 +25,17 @@ else {
     if(!empty($_POST['employername']) 
     && !empty($_POST['email'])
     && !empty($_POST['phonenumber'])
+    && !empty($_POST['streetaddress'])
+    && !empty($_POST['city'])
+    && !empty($_POST['state'])
+    && !empty($_POST['zipcode'])
     && !empty($_POST['userrole'])) {
 
-        $employername = $_POST['employername'];
-        $email = $_POST['email'];
-        $phonenumber = $_POST['phonenumber'];
-        $userrole = $_POST['userrole'];
-        $streetaddress = NULL;
-        $city = NULL;
-        $state = NULL;
-        $zipcode = NULL;  
-
-        if(!empty($_POST['streetaddress']))
-        {
-            $streetaddress = $_POST['streetaddress'];
-        }
-        if(!empty($_POST['city']))
-        {
-            $city = $_POST['city'];
-        }
-        if(!empty($_POST['state']))
-        {
-            $state = $_POST['state'];
-        }
-        if(!empty($_POST['zipcode']))
-        {
-            $zipcode = $_POST['zipcode'];
-        }
-
-        [$error, $success] = makeEmployer($employername, $email, $phonenumber, $userrole, $streetaddress, $city, $state, $zipcode);
-        $inject['body'] = $_SESSION['employerid'];
-        
+        [$error, $success] = makeEmployer($_POST['employername'], $_POST['email'], $_POST['phonenumber'], 
+                            $_POST['streetaddress'], $_POST['city'], $_POST['state'], $_POST['zipcode'], $_POST['userrole']);
         if($success) {
             header('Refresh: 2;url=/cs332/employer');
-            $inject['success'] = '<span>Successfully Created Employer as: ' . issetor($_SESSION['employerid']) . 
+            $inject['success'] = '<span>Successfully Created Employer as:' . issetor($_SESSION['employerid']) . 
             ', redirecting...<a href="/cs332/employer">Click Here if you dont redirect automatically</a></span>';
             $inject['body'] = 'Success';
         }
@@ -79,32 +56,23 @@ $conn->close();
 
 function makeEmployer($employername, $email, $phonenumber, $streetaddress, $city, $state, $zipcode, $userrole) {
 
-    $userrole = $_POST['userrole'];
-    
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid Email";
         return [$error, FALSE];
     }
 
-    if(!empty($_POST['streetaddress']) && !empty($_POST['city']) && !empty($_POST['state']) && !empty($_POST['zipcode']))
-    {
-        $employerAddr= [
-            'streetaddress' => $streetaddress,
-            'city' => $city,
-            'state' => $state,
-            'zipcode' => $zipcode
-        ];
+    $employerAddr= [
+        'streetaddress' => $streetaddress,
+        'city' => $city,
+        'state' => $state,
+        'zipcode' => $zipcode
+    ];
 
-        [$error, $addressid] = createAddr($employerAddr);
-        if ($error) {
-            return [$error, FALSE];
-        }
-    } 
-    else 
-    {
-        $addressid = NULL;
+    [$error, $addressid] = createAddr($employerAddr);
+    if ($error) {
+        return [$error, FALSE];
     }
-    
+
     $employerinfo= [
         'employername' => $employername,
         'addressid' => $addressid,
@@ -126,6 +94,7 @@ function makeEmployer($employername, $email, $phonenumber, $streetaddress, $city
     [$error, $userupdated] = userAddEmployer($userinfo); 
     if (!$error) {
         $_SESSION['employerid'] = $employerid;
+        $_SESSION['employeremail'] = $email;
         return [NULL , TRUE];
     }
 
@@ -242,56 +211,53 @@ function printEmployerForm($error = "") {
                 <h4>Create Employer</h4>  
                 <form action="create.php" method="post">
                     <div class="mb-3">
-                        <class="form-label">* Required Field</label>
-                    </div>
-                    <div class="mb-3">
-                        <label for="employername" class="form-label">Company Name *</label>
+                        <label for="employername" class="form-label">Company Name</label>
                         <input type="text" class="form-control" id="employername" name="employername" aria-describedby="emailHelp"' .
                             ifNotEmptyValueAttribute(issetor($_POST['employername'])) .
                         'required>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email Address *</label>
+                        <label for="email" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"' .
                             ifNotEmptyValueAttribute(issetor($_POST['email'])) .
                         'required>
                     </div>
                     <div class="mb-3">
-                        <label for="phonenumber" class="form-label">Phone Number *</label>
+                        <label for="phonenumber" class="form-label">Phone Number</label>
                         <input type="phone" class="form-control" id="phonenumber" name="phonenumber" aria-describedby="emailHelp"' .
                             ifNotEmptyValueAttribute(issetor($_POST['phonenumber'])) .
                         'required>
                     </div>
                     <div class="mb-3">
-                        <label for="userrole" class="form-label">Role in Hiring Process *</label>
-                        <select class="form-select" id="userrole" name="userrole" required>' .
-                            printAsOpts(getRoleOpts(), 'RoleID', 'Title') . 
-                        '</select>
-                    </div>
-                    <div class="mb-3">
                         <label for="streetaddress" class="form-label">Street Address</label>
                         <input type="text" class="form-control" id="streetaddress" name="streetaddress"' .
                             ifNotEmptyValueAttribute(issetor($_POST['streetaddress'])) .
-                        '>
+                        'required>
                     </div>
                     <div class="mb-3">
-                        <label for="zipcode" class="form-label">Zip Code</label>
+                        <label for="zipcode" class="form-label">ZipCode</label>
                         <input type="text" class="form-control" id="zipcode" name="zipcode"' .
                             ifNotEmptyValueAttribute(issetor($_POST['zipcode'])) .
                             //should add an ajax event to query getzip and autofill city and state
-                        '>
+                        'required>
                     </div>
                     <div class="mb-3">
                         <label for="city" class="form-label">City</label>
                         <input type="text" class="form-control" id="city" name="city"' .
                             ifNotEmptyValueAttribute(issetor($_POST['city'])) .
-                        '>
+                        'required>
                     </div>
                     <div class="mb-3">
                         <label for="state" class="form-label">State</label>
                         <input type="text" class="form-control" id="state" name="state"' .
                             ifNotEmptyValueAttribute(issetor($_POST['state'])) .
-                        '>
+                        'required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userrole" class="form-label">* Role in hiring process</label>
+                        <select class="form-select" id="userrole" name="userrole" required>' .
+                            printAsOpts(getRoleOpts(), 'RoleID', 'Title') . 
+                        '</select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

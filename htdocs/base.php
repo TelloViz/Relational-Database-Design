@@ -29,6 +29,9 @@ function employerlinks() {
       <li class="nav-item">
         <a class="nav-link" href="/cs332/employer">Employer</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cs332/post">Post Job</a>
+      </li>
       </li>') : (
       '<li class="nav-item">
         <a class="nav-link" href="/cs332/employer/create.php">Create Employer</a>
@@ -43,6 +46,33 @@ function ifNotEmptyValueAttribute($value) {
     }
     return "";
 }
+
+// these two functions are used to fill a <select> using the result of a fetch_all from mysqli.
+// the $rows input to printAsOpts is in the form [$error, $kvrows], hence the $rows[1]
+function printOneOpt($val, $text, $isactive=FALSE) {
+  $actstr = "";
+  if ($isactive) {
+    $actstr = " selected ";
+  }
+  return '<option' . $actstr . ' value="' . $val . '">' . $text . '</option>';
+}
+
+function printAsOpts($rows, $val_key, $text_key, $default="") {
+    $opts = "";
+    if (isset($rows[0])) {
+        return printOneOpt('', $rows[0]); //error message
+    }
+    else {
+        foreach ($rows[1] as $row) {
+            if (isset($row)) {
+                $opts = $opts . printOneOpt($row[$val_key], $row[$text_key], $row[$val_key]==$default);
+            }
+        }
+        return $opts;
+    }
+}
+
+
 
 function printMain($inject) {
 
@@ -62,7 +92,7 @@ function printMain($inject) {
     <body class="p-0 m-0">
       <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="/cs332">MyJob</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -80,7 +110,10 @@ function printMain($inject) {
           //employeelinks() . 
           employerlinks() . 
             '<li class="nav-item">
-              <a class="nav-link" href="/cs332/search/">All Posts</a>
+              <a class="nav-link" href="/cs332/posts/">All Posts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/cs332/views/">Required Views</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/cs332/init.php">Reset DB</a>

@@ -6,8 +6,8 @@ function loginUserPage() {
         [$error, $userid] = getUser($_POST['login_email'], $_POST['login_password']);
         if ($userid) {
             $_SESSION['userid'] = $userid;
-            $inject['redirect'] = '/cs332';
-            $inject['success'] = '<span>Succesfully logged in as: ' . $_SESSION['userid'] . ', redirecting...<a href="/cs332">Click Here if you dont redirect automatically</a></span>';
+            $inject['redirect'] = 'account.php';
+            $inject['success'] = '<span>Succesfully logged in as: ' . $_SESSION['userid'] . ', redirecting to profile...<a href="account.php">Click Here if you dont redirect automatically</a></span>';
         }
         else {
             $inject['body'] = printLoginForm($error);

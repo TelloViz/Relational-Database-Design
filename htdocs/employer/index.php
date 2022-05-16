@@ -1,5 +1,8 @@
 <?php 
 require_once('../base.php');
+$conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
+
+require_once('../posts/getposts.php');
 
 
 $inject = [
@@ -11,13 +14,23 @@ $inject = [
 if (isset($_GET['employerid'])) {
     // look up employer 12345 from url in sql
     // htmlspecialchars is a safety precaution
-    [$error, $employerdetails] = getEmployerDetails(htmlspecialchars($_GET['employerid']));
-    if (isset($employerdetails)) {
-        $inject['body'] = printemployerDetails($employerdetails);
+    [$emperror, $employerdetails] = getEmployerDetails(htmlspecialchars($_GET['employerid']));
+    [$posterror, $posts] = getEmployerPosts(htmlspecialchars($_GET['employerid']));
+
+    if (isset($posts)) {
+        $postbody = printPosts($posts);
     }
     else {
-        $inject['error'] = $error;
+        $postwarning = 'Failed to fetch job posts. ' . $posterror;
     }
+    if (isset($employerdetails)) {
+        $empbody = printemployerDetails($employerdetails);
+    }
+    else {
+        $empwarning = 'Failed to fetch employer info. ' . $emperror;
+    }
+    $inject['body'] = issetor($empbody) . issetor($postbody);
+    $inject['warning'] = issetor($emperror) . issetor($posterror);
 }
 else if (isset($_SESSION['employerid'])) {
     [$error, $employerdetails] = getEmployerDetails($_SESSION['employerid']);
@@ -33,21 +46,12 @@ else {
 }
 
 function getEmployerDetails($employerid) {
-    $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
-    $stmt = $conn->prepare("SELECT * FROM EmployerDetailView 
+    $stmt = $GLOBALS['conn']->prepare("SELECT * FROM EmployerDetailView 
                             WHERE employerID = ?");
-/*
-    $stmt = $conn->prepare("SELECT E.EmployerName, E.Email, E.Phone, Z.City, Z.StateID
-                            FROM employers AS E 
-                                INNER JOIN Addresses AS A ON E.AddressID = A.AddressID
-                                INNER JOIN ZipCodes AS Z ON A.ZipCodeID = Z.ZipCodeID
-                            WHERE employerID = ?");
-                            */
     $stmt->bind_param('s', $employerid);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    $conn->close();
     if (isset($row['EmployerName'])) {
         return [NULL, $row];
     }
