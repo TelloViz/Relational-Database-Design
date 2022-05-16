@@ -35,8 +35,8 @@ function printSingle($post) {
     if (isset($post['JobPostID'])) {
         return '<div class="col card border p-0 m-2">
                     <div class="card-body">
-                            <a class="card-title" href="../post/?postid=' . $post['JobPostID'] . '"><h4>' . issetor($post['Title']) . '</h4></a>
-                            <a class="card-subtitle " href="../employer/?employerid=' . $post['EmployerID'] . '"><small class="text-muted">' . issetor($post['EmployerName']) . '</small></a>
+                            <a class="card-title" href="/cs332/post/?postid=' . $post['JobPostID'] . '"><h4>' . issetor($post['Title']) . '</h4></a>
+                            <a class="card-subtitle " href="/cs332/employer/?employerid=' . $post['EmployerID'] . '"><small class="text-muted">' . issetor($post['EmployerName']) . '</small></a>
                             <p class="card-text">' . issetor($post['JobDesc']) . '</p>
                             <p>' . issetor($post['City']) . ', ' . issetor($post['StateID']) . '</p>
                     </div>
