@@ -61,3 +61,10 @@ INNER JOIN AppliedPosts AS AP ON EE.EmployeeID = AP.EmployeeID
 GROUP BY U.UserID
 HAVING COUNT(AP.JobPostID) >= 1 
 ORDER BY U.Time_Stamp DESC;
+
+DROP VIEW IF EXISTS EmployeesAndEmployers;
+CREATE VIEW EmployeesAndEmployers AS
+SELECT useraccount.FirstName, useraccount.LastName, useraccount.EmployeeID, employeradmin.EmployerID 
+FROM useraccount, employeradmin WHERE useraccount.EmployeeID IS NOT NULL 
+AND useraccount.UserID = employeradmin.UserID
+ORDER BY employeradmin.Time_Stamp DESC;
