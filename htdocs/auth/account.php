@@ -112,7 +112,6 @@ function getUserInfo($userid) {
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
-        var_dump($row);
         if (isset($row['UserID'])) {
             return [NULL, $row];
         }
@@ -139,7 +138,9 @@ function getEduOpts() {
     }
 }
 
+
 function printUserInfo($userinfo) {
+    $unsetop = isset($userinfo['EmployeeID']) ? '' : '<option>Not Set. Please set to apply to posts.</option>';
     //check out login.php, use issetor($userinfo['Email']) etc, the string in the brackets is case sensitive, must match the select above
     return '<div class="container justify-content-md-center">
                 <h4>User Profile</h4>
@@ -151,7 +152,7 @@ function printUserInfo($userinfo) {
                 <form class="form" action="account.php" method="POST">
                     <div class="input-group flex-nowrap">
                             <span for="edulevel" class="input-group-text">Education Level:</span>
-                            <select class="form-control" name="edulevel" id="edulevel">' .
+                            <select class="form-control" name="edulevel" id="edulevel">' . $unsetop .
                                 printAsOpts(getEduOpts(), 'EducationID', 'Title', issetor($userinfo['EducationID'])) . 
                             '</select>
                             <button type="submit" class="btn btn-primary">Update</button>
