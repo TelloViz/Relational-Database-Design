@@ -1,4 +1,4 @@
-/*This file creates all of the empty tables 
+/*This file creates all of the empty tables
     involved in the Schemers database. */
 
 DROP DATABASE IF EXISTS schemers;
@@ -9,18 +9,18 @@ USE schemers;
 CREATE TABLE IF NOT EXISTS States (
     StateID VARCHAR(2) NOT NULL,
     StateName VARCHAR(30) NOT NULL,
-    
+
     PRIMARY KEY (StateID)
 );
 
 CREATE TABLE IF NOT EXISTS ZipCodes(
         ZipCodeID INT(5) UNSIGNED NOT NULL,
         StateID VARCHAR(2) NOT NULL,
-        City VARCHAR(255) NOT NULL, 
+        City VARCHAR(255) NOT NULL,
         Time_Stamp DATETIME NOT NULL DEFAULT NOW(),
-    FOREIGN KEY (StateID) REFERENCES States(StateID), 
+    FOREIGN KEY (StateID) REFERENCES States(StateID),
     PRIMARY KEY (ZipCodeID)
-); 
+);
 
 CREATE TABLE IF NOT EXISTS Addresses (
     AddressID INT(10) NOT NULL AUTO_INCREMENT,
@@ -45,6 +45,13 @@ CREATE TABLE IF NOT EXISTS Education(
     Title VARCHAR(255) NOT NULL,
     Time_Stamp DATETIME NOT NULL DEFAULT NOW(),
     PRIMARY KEY (EducationID)
+);
+
+CREATE TABLE IF NOT EXISTS Salary(
+    SalaryID INT(2) NOT NULL UNIQUE AUTO_INCREMENT,
+    Title VARCHAR(255) NOT NULL,
+    Time_Stamp DATETIME NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (SalaryID)
 );
 
 CREATE TABLE IF NOT EXISTS Roles (
@@ -129,29 +136,29 @@ CREATE TABLE IF NOT EXISTS JobPosts (
     EducationID INT(5) NOT NULL,
     JobTypeID INT(10) UNSIGNED NOT NULL,
     ExpReqID  INT(2) NOT NULL,
-    AddressID INT(10) NOT NULL,
-    SalaryMin INT(10) UNSIGNED NOT NULL,
-    SalaryMax INT(10) UNSIGNED,
-    CONSTRAINT SMaxAboveSMin CHECK( SalaryMax >= SalaryMin ),
+    AddressID INT(10) DEFAULT NULL,
+    SalaryID INT(2) NOT NULL,
 
     Title VARCHAR(255) NOT NULL,
-    JobDesc TEXT,
-    JobResp TEXT,
-    JobQual TEXT,
+    JobDesc TEXT DEFAULT NULL,
+    JobResp TEXT DEFAULT NULL,
+    JobQual TEXT DEFAULT NULL,
     ContactEmail VARCHAR(255) NOT NULL,
-    ContactPhone  VARCHAR(15),
-    ContactMessage TEXT,
+    ContactPhone  VARCHAR(15) DEFAULT NULL,
+    ContactMessage TEXT DEFAULT NULL,
 
     Time_Stamp DATETIME NOT NULL DEFAULT NOW(),
-    DatePosted DATETIME,
-    DeadLine DATETIME,
+    DatePosted DATETIME DEFAULT NOW(),
+    DeadLine DATETIME NOT NULL,
 
     PRIMARY KEY (JobPostID),
     FOREIGN KEY (EmployerID) REFERENCES Employers(EmployerID),
     FOREIGN KEY (EducationID) REFERENCES Education(EducationID),
     FOREIGN KEY (JobTypeID) REFERENCES JobTypes(JobTypeID),
     FOREIGN KEY (ExpReqID) REFERENCES ExpReq(ExpReqID),
-    FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID)
+    FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID),
+    FOREIGN KEY (SalaryID) REFERENCES Salary(SalaryID)
+
 );
 
 

@@ -1,13 +1,21 @@
 <?php 
 require_once('../base.php');
+$conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database'], $GLOBALS['port']);
+require_once('getpost.php');
+require_once('makepost.php');
+require_once('postform.php');
 
+$inject = [
+    'title'=>'Make and View Posts',
+    'body'=>''
+];
 // check if url like localhost/cs332/post/?postid=12345
 if (isset($_GET['postid'])) {
     // look up post 12345 from url in sql
     // htmlspecialchars is a safety precaution
     [$error, $postdetails] = getPostDetails(htmlspecialchars($_GET['postid']));
     if (isset($postdetails)) {
-        $inject = printPostDetails($postdetails);
+        $inject['body'] = printPostDetails($postdetails);
     }
     else {
         $inject = [
@@ -16,47 +24,32 @@ if (isset($_GET['postid'])) {
         ];
     }
 }
+else if(!isset($_SESSION['userid'])) {
+    header('Refresh: 2;url=/cs332/auth/login.php');
+    $inject['body'] = '<div class="container"><p class="alert-danger">Must Be Logged in. Redirecting...</p><a href="/cs332/auth/login.php">Click Here if you dont redirect automatically</a></div>';
+}
+else if (!isset($_SESSION['employerid']) ) {
+    header('Refresh: 2;url=/cs332/employer/create.php');
+    $inject['body'] = '<div class="container"><p class="alert-danger">Must be an Employer. Redirecting...</p><a href="/cs332/employer/create.php">Click Here if you dont redirect automatically</a></div>';
+}
+// if post attempted: try to post and display result, if fail print form with errors
+else if (!empty($_POST)) {
+    [$error, $postid] = makePost($_POST);
+    if (isset($postid)) {
+        header('Refresh: 2;url=/cs332/post/?postid=' . $postid);
+        $inject['success'] = '<span>Successfully created post! Redirecting...<a href="/cs332/post/?postid=' . $postid . '">Click Here if you dont redirect automatically</a></span>';
+    }
+    else {
+        $inject['warning'] = 'Failed to create post: ' . $error;
+        $inject['body'] = printPostForm($_POST);
+    }
+}
+// otherwise print form with no fill
 else {
-    $inject = [
-        'body' => '<div class="alert-danger"><h6>No PostID specified</h6></div>',
-        'title' => 'Post Error - No PostID'
-    ];
-}
-
-function getPostDetails($postid) {
-    // need to select post info from db, ideally from a view so you can just do
-    //  (SELECT * FROM PostDetailView WHERE PostID = ?)
-    // and bind the $postid
-
-    // if error like post not found:
-    // return ['Error message', NULL];
-
-    $samplepost = [ 
-        "Title" => "Software Engineer III",
-        "EmployerName" => "Netflix",
-        "JobDesc" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "City" => "Monrovia",
-        "StateID" => "CA",
-    ];
-    return [NULL, $samplepost];
-}
-
-function printPostDetails($postdetails) {
-    // convert $postdetails key/value array to pretty html
-    // should add any fields I forgot to include, benefits etc
-    $postbody = '<div class="col border p-4">
-                    <h4>' . issetor($postdetails['Title']) . '</h4>
-                    <h5>' . issetor($postdetails['EmployerName']) . '</h5>
-                    <p>' . issetor($postdetails['JobDesc']) . '</p>
-                    <p>' . issetor($postdetails['City']) . ', ' . issetor($postdetails['StateID']) . '</p>
-                    </div>';
-    $inject = [
-        'body' => $postbody,
-        'title' => 'Post - ' . issetor($postdetails['Title'])
-    ];
-    return $inject;
+    $inject['body'] = printPostForm();
 }
 
 printMain($inject);
+$conn->close();
 
 ?>
